@@ -1,0 +1,3 @@
+import React from 'react';
+import { ArrowLeft } from 'lucide-react';
+export const NotFoundPage: React.FC<{onNavigate:(path:string)=>void}> = ({onNavigate}) => <section className="min-h-[70vh] bg-[#171414] text-[#f4efe6] flex items-center justify-center px-6 text-center"><div><p className="text-[#d7bb83] text-xs tracking-[.25em] uppercase">404</p><h1 className="font-serif-editorial text-6xl sm:text-8xl mt-4">Page not found</h1><p className="mt-5 text-[#f4efe6]/60">The page you are looking for does not exist.</p><button onClick={()=>onNavigate('/')} className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#d7bb83] text-[#171414] px-6 py-3 text-xs uppercase tracking-wider"><ArrowLeft size={15}/> Back home</button></div></section>;

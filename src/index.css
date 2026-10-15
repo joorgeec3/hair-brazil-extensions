@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-chocolate: #261511;
+    --color-chocolate-dark: #241209;
+    --color-cream: #f2f0e5;
+    --color-peach: #ffd9a8;
+    --color-peach-light: #fadfca;
+    --color-pistachio: #dddcb0;
+    --color-bronze: #543923;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  body {
+    background-color: #261511;
+    color: #f2f0e5;
+    overflow-x: hidden;
+  }
+}
+
+.font-serif-editorial {
+  font-family: 'Bodoni Moda', 'Instrument Serif', Georgia, serif;
+  letter-spacing: -0.015em;
+}
+
+.font-sans-ui {
+  font-family: 'Manrope', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #261511;
+}
+::-webkit-scrollbar-thumb {
+  background: #543923;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ffd9a8;
+}
+
+/* Noise overlay */
+.grain-overlay {
+  background-image: url('https://framerusercontent.com/images/6mcf62RlDfRfU61Yg5vb2pefpi4.png');
+  background-size: 256px 256px;
+  background-repeat: repeat;
+  opacity: 0.035;
+  pointer-events: none;
+}
+
+
+.nav-link,.icon-link { color: rgba(244,239,230,.75); transition: color .25s ease, transform .25s ease; }
+.nav-link { position: relative; padding: .35rem 0; }
+.nav-link::after { content: ''; position: absolute; left: 0; right: 100%; bottom: 0; height: 1px; background: #d7bb83; transition: right .3s ease; }
+.nav-link:hover,.nav-link.active,.icon-link:hover { color: #d7bb83; }
+.nav-link:hover::after,.nav-link.active::after { right: 0; }
+.icon-link:hover { transform: translateY(-2px); }
+.hero-pill { display: inline-flex; align-items: center; justify-content: center; gap: .7rem; width: min(213px, calc(100vw - 2rem)); min-height: 3.6rem; border: 1px solid rgba(244,239,230,.6); border-radius: 999px; padding: .9rem 1.5rem; color: #f4efe6; background: rgba(23,20,20,.24); backdrop-filter: blur(12px); font-size: .82rem; text-transform: uppercase; letter-spacing: .16em; cursor: pointer; transition: transform .25s ease, background .25s ease, color .25s ease, border-color .25s ease, box-shadow .25s ease; }
+.hero-pill svg { width: 18px; height: 18px; flex: 0 0 auto; }
+.hero-pill:hover { transform: translateY(-3px) scale(1.03); background: #d7bb83; border-color: #d7bb83; color: #171414; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+
+/* Global interaction affordance for actionable controls. */
+button, a, select, summary, [role="button"], [tabindex]:not([tabindex="-1"]) { cursor: pointer; }
+.reveal-soft { animation: reveal-soft .8s ease both; }
+@keyframes reveal-soft { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { .reveal-soft { animation: none; } }
