@@ -13,7 +13,7 @@ import { ShopPage } from './pages/ShopPage';
 import { ProductDetailPage } from './pages/ProductDetailPage';
 import { Language, SHOP_PRODUCTS } from './data/shopData';
 
-type BagItem = { id: string; quantity: number };
+type BagItem = { id: string; quantity: number; option?: string };
 const readStorage = <T,>(key: string, fallback: T): T => { try { const value = localStorage.getItem(key); return value ? JSON.parse(value) as T : fallback; } catch { return fallback; } };
 
 export default function App() {
@@ -28,7 +28,18 @@ export default function App() {
   useEffect(() => { localStorage.setItem('hbe-language', language); }, [language]);
   const navigate = (path: string) => { if (path !== currentPath) { window.history.pushState({}, '', path); setCurrentPath(path); window.scrollTo({ top: 0, behavior: 'smooth' }); } };
   const toggleFavorite = (id: string) => setFavorites((items) => items.includes(id) ? items.filter((item) => item !== id) : [...items, id]);
-  const addToBag = (id: string) => { const product = SHOP_PRODUCTS.find((item) => item.id === id); if (!product || product.price == null) return; setBag((items) => items.some((item) => item.id === id) ? items.map((item) => item.id === id ? { ...item, quantity: item.quantity + 1 } : item) : [...items, { id, quantity: 1 }]); };
+  const addToBag = (id: string, option?: string) => {
+    const product = SHOP_PRODUCTS.find((item) => item.id === id);
+    if (!product || product.price == null) return;
+    const selectedOption = product.options?.find((entry) => entry.label === option) ?? product.options?.[0];
+    const chosen = selectedOption?.label;
+    setBag((items) => {
+      const isSame = (item: BagItem) => item.id === id && (item.option || '') === (chosen || '');
+      return items.some(isSame)
+        ? items.map((item) => isSame(item) ? { ...item, quantity: item.quantity + 1 } : item)
+        : [...items, { id, quantity: 1, option: chosen }];
+    });
+  };
   const bagCount = useMemo(() => bag.reduce((sum, item) => sum + item.quantity, 0), [bag]);
   const openBooking = () => window.open('https://wa.me/13053001475?text=Hi%21%20I%20would%20like%20to%20schedule%20an%20appointment%20at%20Hair%20Brazil%20Extensions.', '_blank', 'noopener,noreferrer');
   const renderPage = () => { const normalized = currentPath.replace(/\/+$/, '') || '/';
@@ -37,7 +48,7 @@ export default function App() {
     if (normalized === '/services') return <ServicesPage onNavigate={navigate}/>;
     if (normalized === '/shop' || normalized === '/courses') return <ShopPage language={language} favorites={favorites} onToggleFavorite={toggleFavorite} onAdd={addToBag} onNavigate={navigate}/>;
     if (normalized === '/favorites') return <ShopPage language={language} favorites={favorites} onToggleFavorite={toggleFavorite} onAdd={addToBag} onNavigate={navigate} favoritesOnly/>;
-    if (normalized.startsWith('/shop/')) return <ProductDetailPage id={normalized.replace('/shop/', '')} language={language} favorites={favorites} onToggleFavorite={toggleFavorite} onAdd={addToBag} onNavigate={navigate}/>;
+    if (normalized.startsWith('/shop/')) return <ProductDetailPage key={normalized} id={normalized.replace('/shop/', '')} language={language} favorites={favorites} onToggleFavorite={toggleFavorite} onAdd={addToBag} onNavigate={navigate}/>;
     if (normalized === '/gallery') return <ServicesPage onNavigate={navigate}/>;
     if (normalized === '/contact' || normalized === '/booking') return <ContactPage/>;
     if (normalized.startsWith('/services/')) return <ServiceDetailPage slug={normalized.replace('/services/', '')} onOpenBooking={openBooking} onNavigate={navigate}/>;
