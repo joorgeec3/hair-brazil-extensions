@@ -284,7 +284,7 @@ export const ShopPage: React.FC<Props> = ({
                             src={product.image}
                             alt={product.name}
                             loading="lazy"
-                            className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.035]"
+                            className={'h-full w-full transition-transform duration-500 ease-out group-hover:scale-[1.035] ' + (product.id.startsWith('owner-') ? 'object-contain p-2' : 'object-cover')}
                           />
                         ) : (
                           <div className="flex h-full w-full flex-col items-center justify-center gap-3 p-3 text-[#b2a594]">
