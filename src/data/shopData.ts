@@ -1,10 +1,12 @@
 import { OWNER_PRODUCTS } from './ownerProducts';
+import { OWNER_PRODUCTS_BATCH_2 } from './ownerProductsBatch2';
 export type Language = 'EN' | 'PT' | 'ES';
 
 export interface ShopProduct { id: string; name: string; description: string; category: string; price?: number; compareAtPrice?: number; priceFrom?: boolean; currency: 'USD'; image?: string; images?: string[]; options?: { label: string; price: number }[]; available: boolean; variants: string[]; officialUrl?: string; }
 
 // Imported from the owner-provided HTML catalog package. Images, descriptions, variants and inventory were not present in that package.
 export const SHOP_PRODUCTS: ShopProduct[] = [
+  ...OWNER_PRODUCTS_BATCH_2,
   ...OWNER_PRODUCTS,
   {"id": "hb-48", "image": "/assets/catalog-covers/05_alicate_preto_extensoes.webp", "name": "Hair Extension Pliers", "description": "", "category": "Tools & Accessories", "price": 22.99, "compareAtPrice": 25.0, "priceFrom": false, "currency": "USD", "available": false, "variants": []},
   {"id": "hb-49", "image": "/assets/catalog-covers/06_alicate_metalico.webp", "name": "Plier to Micro ring extensions", "description": "", "category": "Tools & Accessories", "price": 20.99, "compareAtPrice": 22.99, "priceFrom": false, "currency": "USD", "available": false, "variants": []},
