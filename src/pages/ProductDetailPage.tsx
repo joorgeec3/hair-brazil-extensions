@@ -111,7 +111,7 @@ export const ProductDetailPage: React.FC<Props> = ({
             )}
             {product.id === 'hb-55' && <p className="mt-3 text-xs font-semibold uppercase tracking-[.15em] text-[#946c4b]">Limited Edition</p>}
             {product.description && (
-              <p className="mt-6 max-w-lg text-sm leading-7 text-[#655d54]">{product.description}</p>
+              <section className="mt-7 border-t border-[#241f1b]/10 pt-6"><h2 className="mb-3 text-[11px] font-semibold uppercase tracking-[.16em] text-[#9a7c54]">{language === "PT" ? "Descrição do produto" : language === "ES" ? "Descripción del producto" : "Product description"}</h2><p className="max-w-lg text-sm leading-7 text-[#655d54]">{product.description}</p></section>
             )}
             {hasOptions && (
               <div className="mt-9 border-t border-[#241f1b]/10 pt-7">

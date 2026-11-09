@@ -334,6 +334,7 @@ export const ShopPage: React.FC<Props> = ({
                       >
                         {product.name}
                       </button>
+                      {product.description && <p className="mt-2 line-clamp-2 text-[11px] leading-[1.55] text-[#736b63]">{product.description}</p>}
                       <div className="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-1">
                         {product.price != null ? (
                           <span className={'text-[13px] font-semibold ' + (product.compareAtPrice != null && product.price != null && product.compareAtPrice > product.price ? 'text-[#b64132]' : 'text-[#241f1b]')}>
