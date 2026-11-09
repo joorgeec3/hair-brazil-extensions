@@ -57,7 +57,7 @@ export const ProductDetailPage: React.FC<Props> = ({
       <div className="mx-auto max-w-[1300px]">
         <button
           type="button"
-          onClick={() => onNavigate('/shop')}
+          onClick={() => onNavigate(product.category === 'Training & Courses' ? '/courses' : '/shop')}
           className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[.14em] text-[#876b47] hover:text-[#241f1b]"
         >
           <ArrowLeft size={15} /> {copy.continue}
@@ -102,10 +102,14 @@ export const ProductDetailPage: React.FC<Props> = ({
             <h1 className="mt-4 font-serif-editorial text-[clamp(2.7rem,5vw,5rem)] leading-[1.01]">
               {product.name}
             </h1>
-            <p className="mt-7 text-[25px] font-medium tracking-tight">
+            <p className={"mt-7 text-[25px] font-medium tracking-tight " + (product.compareAtPrice != null && displayPrice != null && product.compareAtPrice > displayPrice ? "text-[#b64132]" : "")}>
               {displayPrice != null ? currency(displayPrice) : copy.request}
               {displayPrice != null && <span className="ml-2 text-xs font-normal text-[#877e75]">USD</span>}
             </p>
+            {product.compareAtPrice != null && displayPrice != null && product.compareAtPrice > displayPrice && (
+              <p className="mt-2 flex items-center gap-3 text-sm"><span className="line-through text-[#8f867c]">{currency(product.compareAtPrice)}</span><span className="bg-[#6e5146] px-2 py-1 text-[10px] uppercase tracking-widest text-white">{language === 'PT' ? 'Oferta' : language === 'ES' ? 'Oferta' : 'Sale'}</span></p>
+            )}
+            {product.id === 'hb-55' && <p className="mt-3 text-xs font-semibold uppercase tracking-[.15em] text-[#946c4b]">Limited Edition</p>}
             {product.description && (
               <p className="mt-6 max-w-lg text-sm leading-7 text-[#655d54]">{product.description}</p>
             )}

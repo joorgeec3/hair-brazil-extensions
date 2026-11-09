@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1250" viewBox="0 0 1000 1250" role="img" aria-labelledby="title desc">
+<title id="title">5 Hair Extension Application Techniques – Professional Training</title>
+<desc id="desc">Editorial training course cover in black, taupe and soft gold with flowing hair-inspired linework.</desc>
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#201916"/><stop offset=".5" stop-color="#342821"/><stop offset="1" stop-color="#0f0b0c"/></linearGradient>
+<linearGradient id="gold" x1="0" y1="0" x2="1" y2=".8"><stop stop-color="#f3dcc0"/><stop offset=".48" stop-color="#b18b65"/><stop offset="1" stop-color="#e7c5a3"/></linearGradient>
+<radialGradient id="light" cx=".82" cy=".3" r=".75"><stop stop-color="#c7a27d" stop-opacity=".28"/><stop offset="1" stop-color="#c7a27d" stop-opacity="0"/></radialGradient></defs>
+<rect width="1000" height="1250" fill="url(#bg)"/><rect width="1000" height="1250" fill="url(#light)"/>
+<g fill="none" stroke="url(#gold)" stroke-linecap="round" opacity=".44">
+<path d="M824 -50 C530 161 1090 383 707 669 S1054 1102 715 1370" stroke-width="28"/>
+<path d="M882 -50 C593 180 1075 393 758 675 S1098 1103 773 1370" stroke-width="18" opacity=".63"/>
+<path d="M937 -50 C652 185 1147 420 808 715 S1110 1130 832 1340" stroke-width="10"/>
+<path d="M749 -50 C430 180 1008 387 636 660 S991 1108 660 1370" stroke-width="8"/>
+<path d="M710 -50 C350 190 955 402 598 658 S904 1120 611 1350" stroke-width="3"/></g>
+<rect x="42" y="42" width="916" height="1166" fill="none" stroke="#b69475" stroke-opacity=".5" stroke-width="2"/>
+<text x="88" y="126" fill="#ead5ba" font-family="Arial,sans-serif" font-weight="600" font-size="24" letter-spacing="6">HAIR BRAZIL EXTENSIONS</text>
+<path d="M90 158 H375" stroke="#bea185" stroke-width="3"/>
+<text x="86" y="576" fill="url(#gold)" font-family="Georgia,serif" font-size="400" font-weight="400">5</text>
+<text x="95" y="686" fill="#f7ecde" font-family="Georgia,serif" font-size="86" letter-spacing="2">TECHNIQUES</text>
+<text x="96" y="754" fill="#d7bea4" font-family="Arial,sans-serif" font-size="32" letter-spacing="5">APPLICATION MASTERCLASS</text>
+<path d="M96 798 H546" stroke="#c3a585" stroke-width="3" opacity=".8"/>
+<text x="96" y="1040" fill="#f1e2d1" font-family="Arial,sans-serif" font-size="27" letter-spacing="6">PROFESSIONAL TRAINING</text>
+<text x="96" y="1094" fill="#c9af93" font-family="Arial,sans-serif" font-size="20" letter-spacing="4">HAIR EXTENSION EDUCATION</text>
+</svg>

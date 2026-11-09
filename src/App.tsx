@@ -46,7 +46,8 @@ export default function App() {
     if (normalized === '/') return <HomePage onNavigate={navigate} onOpenBooking={openBooking}/>;
     if (normalized === '/about' || normalized === '/studio') return <AboutPage onOpenBooking={openBooking}/>;
     if (normalized === '/services') return <ServicesPage onNavigate={navigate}/>;
-    if (normalized === '/shop' || normalized === '/courses') return <ShopPage language={language} favorites={favorites} onToggleFavorite={toggleFavorite} onAdd={addToBag} onNavigate={navigate}/>;
+    if (normalized === '/shop') return <ShopPage language={language} favorites={favorites} onToggleFavorite={toggleFavorite} onAdd={addToBag} onNavigate={navigate}/>;
+    if (normalized === '/courses') return <ShopPage language={language} favorites={favorites} onToggleFavorite={toggleFavorite} onAdd={addToBag} onNavigate={navigate} coursesOnly/>;
     if (normalized === '/favorites') return <ShopPage language={language} favorites={favorites} onToggleFavorite={toggleFavorite} onAdd={addToBag} onNavigate={navigate} favoritesOnly/>;
     if (normalized.startsWith('/shop/')) return <ProductDetailPage key={normalized} id={normalized.replace('/shop/', '')} language={language} favorites={favorites} onToggleFavorite={toggleFavorite} onAdd={addToBag} onNavigate={navigate}/>;
     if (normalized === '/gallery') return <ServicesPage onNavigate={navigate}/>;

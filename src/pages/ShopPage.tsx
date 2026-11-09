@@ -9,6 +9,7 @@ interface Props {
   onAdd: (id: string) => void;
   onNavigate: (path: string) => void;
   favoritesOnly?: boolean;
+  coursesOnly?: boolean;
 }
 
 const LABELS = {
@@ -97,7 +98,8 @@ export const ShopPage: React.FC<Props> = ({
   favorites,
   onToggleFavorite,
   onNavigate,
-  favoritesOnly = false
+  favoritesOnly = false,
+  coursesOnly = false
 }) => {
   const copy = SHOP_COPY[language];
   const labels = LABELS[language];
@@ -107,24 +109,31 @@ export const ShopPage: React.FC<Props> = ({
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   const categories = useMemo(
-    () => Array.from(new Set(SHOP_PRODUCTS.map((item) => item.category))),
-    []
+    () => Array.from(new Set(SHOP_PRODUCTS.filter((item) => !coursesOnly || item.category === 'Training & Courses').map((item) => item.category))),
+    [coursesOnly]
   );
 
   const products = useMemo(() => {
     const search = query.trim().toLocaleLowerCase();
     return SHOP_PRODUCTS.filter((item) => {
       if (favoritesOnly && !favorites.includes(item.id)) return false;
+      if (coursesOnly && item.category !== 'Training & Courses') return false;
       if (category !== 'all' && item.category !== category) return false;
       return !search || [item.name, item.description, item.category]
         .join(' ').toLocaleLowerCase().includes(search);
     }).sort((a, b) => {
+      if (sort === 'featured' && coursesOnly) {
+        const featured = ['hb-56', 'hb-53', 'hb-55'];
+        const aRank = featured.includes(a.id) ? featured.indexOf(a.id) : 100;
+        const bRank = featured.includes(b.id) ? featured.indexOf(b.id) : 100;
+        if (aRank !== bRank) return aRank - bRank;
+      }
       if (sort === 'name') return a.name.localeCompare(b.name);
       if (sort === 'low') return (a.price ?? Infinity) - (b.price ?? Infinity);
       if (sort === 'high') return (b.price ?? -1) - (a.price ?? -1);
       return 0;
     });
-  }, [query, category, sort, favoritesOnly, favorites]);
+  }, [query, category, sort, favoritesOnly, favorites, coursesOnly]);
 
   const clearFilters = () => {
     setQuery('');
@@ -167,15 +176,15 @@ export const ShopPage: React.FC<Props> = ({
           <nav className="mb-8 flex items-center gap-2 text-[11px] tracking-wide text-[#80776b]" aria-label="Breadcrumb">
             <button type="button" onClick={() => onNavigate('/')} className="transition hover:text-[#241f1b]">{labels.home}</button>
             <span aria-hidden="true">/</span>
-            <span className="text-[#241f1b]">{labels.shop}</span>
+            <span className="text-[#241f1b]">{coursesOnly ? (language === 'PT' ? 'Cursos' : language === 'ES' ? 'Cursos' : 'Courses') : labels.shop}</span>
           </nav>
           <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
             <div>
               <p className="mb-4 text-[10px] uppercase tracking-[.27em] text-[#957b54]">{labels.eyebrow}</p>
               <h1 className="font-serif-editorial text-[clamp(3.7rem,8vw,7.1rem)] leading-[.85] tracking-tight">
-                {favoritesOnly ? labels.yourFavorites : labels.heading}
+                {favoritesOnly ? labels.yourFavorites : coursesOnly ? (language === 'PT' ? 'Cursos' : language === 'ES' ? 'Cursos' : 'Courses') : labels.heading}
               </h1>
-              <p className="mt-7 max-w-[530px] text-[14px] leading-7 text-[#635b53]">{labels.intro}</p>
+              <p className="mt-7 max-w-[530px] text-[14px] leading-7 text-[#635b53]">{coursesOnly ? (language === 'PT' ? 'Treinamentos profissionais em extensão capilar, técnicas de costura e próteses capilares.' : language === 'ES' ? 'Formación profesional en extensiones, costura y sistemas capilares.' : 'Professional training in hair extensions, weft sewing and hair replacement.') : labels.intro}</p>
             </div>
             <div className="hidden md:block text-right">
               <span className="block font-serif-editorial text-[30px] italic text-[#a98d65]">Hair Brazil</span>
@@ -208,7 +217,7 @@ export const ShopPage: React.FC<Props> = ({
               <div>
                 <p className="mb-2 text-[10px] uppercase tracking-[.2em] text-[#9a7c54]">{labels.collection}</p>
                 <h2 className="font-serif-editorial text-[30px] leading-none sm:text-[37px]">
-                  {category === 'all' ? labels.allItems : category}
+                  {category === 'all' ? (coursesOnly ? (language === 'PT' ? 'Treinamento profissional' : language === 'ES' ? 'Formación profesional' : 'Professional training') : labels.allItems) : category}
                 </h2>
                 <span className="mt-3 block text-xs text-[#877e75]">
                   {products.length} {products.length === 1 ? labels.product : labels.products}
@@ -293,6 +302,11 @@ export const ShopPage: React.FC<Props> = ({
                           </div>
                         )}
                       </button>
+                      {product.compareAtPrice != null && product.price != null && product.compareAtPrice > product.price && (
+                        <span className="pointer-events-none absolute left-2 top-2 bg-[#6e5146] px-3 py-1.5 text-[10px] uppercase tracking-[.14em] text-white shadow-sm">
+                          {language === 'PT' ? 'Oferta' : language === 'ES' ? 'Oferta' : 'Sale'}
+                        </span>
+                      )}
                       <button
                         type="button"
                         aria-label={copy.favorites + ': ' + product.name}
@@ -311,6 +325,7 @@ export const ShopPage: React.FC<Props> = ({
                       </button>
                     </div>
                     <div className="pt-4">
+                      {product.id === 'hb-55' && <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-[.12em] text-[#9c6648]">Limited Edition</p>}
                       <p className="mb-1.5 text-[10px] uppercase tracking-[.12em] text-[#9e8f7e]">{product.category}</p>
                       <button
                         type="button"
@@ -321,7 +336,7 @@ export const ShopPage: React.FC<Props> = ({
                       </button>
                       <div className="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-1">
                         {product.price != null ? (
-                          <span className="text-[13px] font-semibold text-[#241f1b]">
+                          <span className={'text-[13px] font-semibold ' + (product.compareAtPrice != null && product.price != null && product.compareAtPrice > product.price ? 'text-[#b64132]' : 'text-[#241f1b]')}>
                             {product.priceFrom ? 'From ' : ''}{currency(product.price)}
                           </span>
                         ) : (
