@@ -122,6 +122,10 @@ export const ShopPage: React.FC<Props> = ({
       return !search || [item.name, item.description, item.category]
         .join(' ').toLocaleLowerCase().includes(search);
     }).sort((a, b) => {
+      // Shop landing page: show products with confirmed prices before unpriced catalog entries.
+      if (sort === 'featured' && !coursesOnly && (a.price == null) !== (b.price == null)) {
+        return a.price == null ? 1 : -1;
+      }
       if (sort === 'featured' && coursesOnly) {
         const featured = ['hb-57', 'hb-56', 'hb-53', 'hb-55'];
         const aRank = featured.includes(a.id) ? featured.indexOf(a.id) : 100;
@@ -134,6 +138,9 @@ export const ShopPage: React.FC<Props> = ({
       return 0;
     });
   }, [query, category, sort, favoritesOnly, favorites, coursesOnly]);
+
+  const pricedCount = products.filter((item) => item.price != null).length;
+  const pendingPriceCount = products.length - pricedCount;
 
   const clearFilters = () => {
     setQuery('');
@@ -222,6 +229,14 @@ export const ShopPage: React.FC<Props> = ({
                 <span className="mt-3 block text-xs text-[#877e75]">
                   {products.length} {products.length === 1 ? labels.product : labels.products}
                 </span>
+                <p className="mt-2 text-[12px] font-medium text-[#5b5148]">
+                  {pricedCount} {language === 'PT' ? 'com preço' : language === 'ES' ? 'con precio' : 'with prices'}
+                  {pendingPriceCount > 0 && (
+                    <span className="font-normal text-[#83796d]">
+                      {' · '}{pendingPriceCount} {language === 'PT' ? 'aguardando preço' : language === 'ES' ? 'pendientes de precio' : 'awaiting prices'}
+                    </span>
+                  )}
+                </p>
               </div>
               <div className="flex items-center gap-3 sm:gap-5">
                 <button
@@ -334,19 +349,19 @@ export const ShopPage: React.FC<Props> = ({
                       >
                         {product.name}
                       </button>
-                      {product.description && <p className="mt-2 line-clamp-2 text-[11px] leading-[1.55] text-[#736b63]">{product.description}</p>}
-                      <div className="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                      <div className="mt-3 flex flex-wrap items-baseline gap-x-2 gap-y-1" aria-label={product.price != null ? 'Price in US dollars' : 'Price pending'}>
                         {product.price != null ? (
-                          <span className={'text-[13px] font-semibold ' + (product.compareAtPrice != null && product.price != null && product.compareAtPrice > product.price ? 'text-[#b64132]' : 'text-[#241f1b]')}>
-                            {product.priceFrom ? 'From ' : ''}{currency(product.price)}
+                          <span className={'text-[17px] font-bold tracking-tight sm:text-[18px] ' + (product.compareAtPrice != null && product.price != null && product.compareAtPrice > product.price ? 'text-[#b64132]' : 'text-[#241f1b]')}>
+                            {product.priceFrom ? (language === 'PT' ? 'A partir de ' : language === 'ES' ? 'Desde ' : 'From ') : ''}{currency(product.price)}
                           </span>
                         ) : (
-                          <span className="text-xs text-[#8f8172]">{copy.request}</span>
+                          <span className="text-[13px] font-semibold text-[#806e5d]">{copy.request}</span>
                         )}
                         {product.compareAtPrice != null && product.price != null && product.compareAtPrice > product.price && (
                           <span className="text-xs text-[#a69d94] line-through">{currency(product.compareAtPrice)}</span>
                         )}
                       </div>
+                      {product.description && <p className="mt-2 line-clamp-2 text-[11px] leading-[1.55] text-[#736b63]">{product.description}</p>}
                       {!product.available && <p className="mt-2 text-[10px] text-[#948578]">{labels.availability}</p>}
                     </div>
                   </article>
