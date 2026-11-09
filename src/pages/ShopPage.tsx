@@ -123,7 +123,7 @@ export const ShopPage: React.FC<Props> = ({
         .join(' ').toLocaleLowerCase().includes(search);
     }).sort((a, b) => {
       if (sort === 'featured' && coursesOnly) {
-        const featured = ['hb-56', 'hb-53', 'hb-55'];
+        const featured = ['hb-57', 'hb-56', 'hb-53', 'hb-55'];
         const aRank = featured.includes(a.id) ? featured.indexOf(a.id) : 100;
         const bRank = featured.includes(b.id) ? featured.indexOf(b.id) : 100;
         if (aRank !== bRank) return aRank - bRank;
