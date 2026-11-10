@@ -125,3 +125,28 @@ button, a, select, summary, [role="button"], [tabindex]:not([tabindex="-1"]) { c
     padding: .85rem 1.25rem;
   }
 }
+
+
+/* Scroll transitions: enabled only for elements that JS has checked are below
+   the fold. The default remains fully visible without JS/IntersectionObserver. */
+html { scroll-behavior: smooth; scroll-padding-top: 5.5rem; }
+.hb-scroll-reveal {
+  opacity: 0;
+  transform: translate3d(0, 26px, 0);
+  transition: opacity 680ms cubic-bezier(.2,.7,.2,1), transform 680ms cubic-bezier(.2,.7,.2,1);
+}
+.hb-scroll-reveal.hb-reveal-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+@media (max-width: 640px) {
+  .hb-scroll-reveal { transform: translate3d(0, 16px, 0); transition-duration: 520ms; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hb-scroll-reveal, .hb-scroll-reveal.hb-reveal-visible {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
