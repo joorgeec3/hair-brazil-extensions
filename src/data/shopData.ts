@@ -8,6 +8,24 @@ export interface ShopProduct { id: string; name: string; description: string; ca
 // Imported from the owner-provided HTML catalog package. Images, descriptions, variants and inventory were not present in that package.
 export const SHOP_PRODUCTS: ShopProduct[] = [
   ...OWNER_PRODUCTS_BATCH_3,
+  {
+    "id": "santa-clara-highlighting-cap-5684",
+    "name": "Santa Clara Special Highlighting Cap with Velcro – Transparent (5684)",
+    "description": "Santa Clara professional highlighting cap with Velcro closure, transparent/traditional version, manufacturer code 5684. The perforated cap helps separate selected strands for highlights, bleaching, coloring and toning, including work close to the nape. Adjustable straps help keep the cap in position. One cap per box. Only the transparent variant is listed; black and green versions have not been confirmed for this shop.",
+    "category": "Salon Accessories",
+    "price": 19.9,
+    "currency": "USD",
+    "image": "https://product-data.raiadrogasil.io/images/17073135.webp",
+    "images": [
+      "https://product-data.raiadrogasil.io/images/17073135.webp",
+      "https://images.tcdn.com.br/img/img_prod/159791/touca_para_reflexo_com_velcro_santa_clara_6562_2_6229ac296a2ef0ec1177f475534739db.jpg"
+    ],
+    "available": false,
+    "variants": [
+      "Transparent / Traditional – 5684"
+    ],
+    "officialUrl": "https://www.santaclara.ind.br/produto/touca-especial-com-velcro-para-reflexo/"
+  },
   ...OWNER_PRODUCTS_BATCH_2,
   ...OWNER_PRODUCTS,
   {"id":"hb-48","image":"/assets/catalog-covers/05_alicate_preto_extensoes.webp","name":"Hair Extension Pliers","description":"Professional hair-extension pliers designed for compatible salon installation and maintenance tasks. Check the tool's jaw design to ensure it is suited to your extension attachment system.","category":"Tools & Accessories","price":22.99,"compareAtPrice":25,"priceFrom":false,"currency":"USD","available":false,"variants":[]},
