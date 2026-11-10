@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
-import { ArrowRight, ChevronDown, Heart, Search, ShoppingBag, SlidersHorizontal, X } from 'lucide-react';
-import { SHOP_COPY, SHOP_PRODUCTS, Language } from '../data/shopData';
+import { ArrowRight, ChevronDown, ChevronLeft, ChevronRight, Heart, Search, ShoppingBag, SlidersHorizontal, X } from 'lucide-react';
+import { SHOP_COPY, SHOP_PRODUCTS, Language, type ShopProduct } from '../data/shopData';
 
 interface Props {
   language: Language;
@@ -92,6 +92,86 @@ const LABELS = {
 
 const currency = (price: number) =>
   new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(price);
+
+/**
+ * Each card owns its photo index, so paging one product never changes the
+ * photo shown in another card. Arrows only appear for products with 2+ photos.
+ */
+const CardPhotoGallery: React.FC<{
+  product: ShopProduct;
+  language: Language;
+  onOpen: () => void;
+  emptyLabel: string;
+  viewLabel: string;
+}> = ({ product, language, onOpen, emptyLabel, viewLabel }) => {
+  const photos = Array.from(new Set([
+    ...(product.images ?? []),
+    ...(product.image ? [product.image] : []),
+  ].filter(Boolean)));
+  const [index, setIndex] = useState(0);
+  const hasGallery = photos.length > 1;
+  const photo = photos[index] ?? photos[0];
+  const previous = () => setIndex((current) => (current - 1 + photos.length) % photos.length);
+  const next = () => setIndex((current) => (current + 1) % photos.length);
+  const photoLabel = language === 'PT' ? 'Foto' : language === 'ES' ? 'Foto' : 'Photo';
+  const previousLabel = language === 'PT' ? 'Foto anterior' : language === 'ES' ? 'Foto anterior' : 'Previous photo';
+  const nextLabel = language === 'PT' ? 'Próxima foto' : language === 'ES' ? 'Siguiente foto' : 'Next photo';
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={onOpen}
+        className="absolute inset-0 block h-full w-full"
+        aria-label={viewLabel + ': ' + product.name}
+      >
+        {photo ? (
+          <img
+            src={photo}
+            alt={product.name + ' — ' + photoLabel.toLowerCase() + ' ' + (index + 1)}
+            loading="lazy"
+            className={'h-full w-full transition-transform duration-500 ease-out group-hover:scale-[1.035] ' +
+              (product.id.startsWith('owner-') || product.id.startsWith('batch3-') ? 'object-contain p-2' : 'object-cover')}
+          />
+        ) : (
+          <div className="flex h-full w-full flex-col items-center justify-center gap-3 p-3 text-[#b2a594]">
+            <ShoppingBag size={30} strokeWidth={1} />
+            <span className="text-center text-[10px] tracking-wide">{emptyLabel}</span>
+          </div>
+        )}
+      </button>
+      {hasGallery && (
+        <>
+          <button
+            type="button"
+            onClick={previous}
+            aria-label={previousLabel + ': ' + product.name}
+            title={previousLabel}
+            className="absolute left-1.5 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/75 bg-white/90 text-[#241f1b] shadow-md transition hover:bg-[#241f1b] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9a7c54] sm:left-2 sm:h-9 sm:w-9"
+          >
+            <ChevronLeft size={19} strokeWidth={2} aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            onClick={next}
+            aria-label={nextLabel + ': ' + product.name}
+            title={nextLabel}
+            className="absolute right-1.5 top-1/2 z-10 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/75 bg-white/90 text-[#241f1b] shadow-md transition hover:bg-[#241f1b] hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9a7c54] sm:right-2 sm:h-9 sm:w-9"
+          >
+            <ChevronRight size={19} strokeWidth={2} aria-hidden="true" />
+          </button>
+          <div
+            className="pointer-events-none absolute bottom-2 left-1/2 z-10 -translate-x-1/2 rounded-full bg-[#241f1b]/70 px-2.5 py-1 text-[10px] font-medium tabular-nums text-white backdrop-blur-sm sm:bottom-14"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            {index + 1} / {photos.length}
+          </div>
+        </>
+      )}
+    </>
+  );
+};
 
 export const ShopPage: React.FC<Props> = ({
   language,
@@ -297,26 +377,13 @@ export const ShopPage: React.FC<Props> = ({
                 {products.map((product) => (
                   <article key={product.id} className="group min-w-0">
                     <div className="relative aspect-[4/5] overflow-hidden bg-[#f1eee9]">
-                      <button
-                        type="button"
-                        onClick={() => onNavigate('/shop/' + product.id)}
-                        className="absolute inset-0 block h-full w-full"
-                        aria-label={labels.view + ': ' + product.name}
-                      >
-                        {product.image ? (
-                          <img
-                            src={product.image}
-                            alt={product.name}
-                            loading="lazy"
-                            className={'h-full w-full transition-transform duration-500 ease-out group-hover:scale-[1.035] ' + (product.id.startsWith('owner-') ? 'object-contain p-2' : 'object-cover')}
-                          />
-                        ) : (
-                          <div className="flex h-full w-full flex-col items-center justify-center gap-3 p-3 text-[#b2a594]">
-                            <ShoppingBag size={30} strokeWidth={1} />
-                            <span className="text-center text-[10px] tracking-wide">{labels.photo}</span>
-                          </div>
-                        )}
-                      </button>
+                      <CardPhotoGallery
+                        product={product}
+                        language={language}
+                        onOpen={() => onNavigate('/shop/' + product.id)}
+                        emptyLabel={labels.photo}
+                        viewLabel={labels.view}
+                      />
                       {product.compareAtPrice != null && product.price != null && product.compareAtPrice > product.price && (
                         <span className="pointer-events-none absolute left-2 top-2 bg-[#6e5146] px-3 py-1.5 text-[10px] uppercase tracking-[.14em] text-white shadow-sm">
                           {language === 'PT' ? 'Oferta' : language === 'ES' ? 'Oferta' : 'Sale'}
