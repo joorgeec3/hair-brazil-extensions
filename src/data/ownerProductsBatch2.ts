@@ -3,11 +3,11 @@ import type { ShopProduct } from './shopData';
 type Entry = { name: string; category: string; price: number; photos: number; description: string };
 const entries: Entry[] = [
   {
-    "name": "Salon Sectioning Clips – Professional Set",
+    "name": "3-Inch Butterfly Hair Sectioning Clips – Black & White",
     "category": "Salon Accessories",
     "price": 6.99,
     "photos": 2,
-    "description": "Professional salon clips for separating hair during coloring, blow-drying and hair-extension work. Review the photos to confirm the clip style and number of pieces."
+    "description": "Professional 3-inch butterfly hair clips, pictured in black and white in their original retail package. Designed to hold larger sections during blow-drying, hair coloring, styling and extension work. Confirm the number of clips included before ordering."
   },
   {
     "name": "Supertape Double-Sided Hair Extension Tape Tabs",
@@ -24,18 +24,18 @@ const entries: Entry[] = [
     "description": "Application brush for placing hair color or compatible salon treatments on roots and individual sections with control."
   },
   {
-    "name": "Silicone Micro Rings for Hair Extensions",
-    "category": "Extension Tools",
+    "name": "White Adjustable Glue Holder Rings",
+    "category": "Salon Accessories",
     "price": 3.99,
     "photos": 3,
-    "description": "Silicone-lined micro rings for compatible hair-extension techniques. Confirm ring size and color before choosing a fitting tool."
+    "description": "Small white open-ended plastic finger rings with a circular platform for holding a small amount of adhesive during precise salon applications. These are glue-holder rings, not metal micro-ring beads. Confirm the pack quantity and suitable product type before use."
   },
   {
-    "name": "Hair Extension Protective Pads",
-    "category": "Extension Tools",
+    "name": "Perforated Finger Protection Wraps – Beige",
+    "category": "Salon Accessories",
     "price": 4.99,
     "photos": 2,
-    "description": "Protective pads for isolating surrounding strands during compatible extension-application techniques. Check the photos for shape and quantity."
+    "description": "Beige perforated finger protection wraps with shaped inner and outer sections, shown applied around a finger in the product photos. Designed to cover the finger while performing detailed salon work. Material, heat resistance and pack quantity have not been verified."
   },
   {
     "name": "U-Shape Snap Clips – 5 Pieces",
@@ -80,11 +80,11 @@ const entries: Entry[] = [
     "description": "50 grams of Italian keratin glue for compatible professional keratin-bond hair-extension techniques. Use with the appropriate tools and application method."
   },
   {
-    "name": "Elastic Thread for Brazilian Knots",
+    "name": "LASTEX Elastic Thread for Brazilian Knots – 10 m",
     "category": "Extension Tools",
     "price": 4.99,
     "photos": 3,
-    "description": "Elastic thread for Brazilian-knot hair-extension installation, priced individually. Intended to wrap and secure compatible extension attachment points."
+    "description": "LASTEX elastic thread in a 10-meter spool, as indicated on the original label. Used for wrapping and securing compatible Brazilian-knot hair-extension attachment points. Sold individually; confirm the available thread colors."
   },
   {
     "name": "Keratin Bond Cutting Tool for Hair Extensions",
