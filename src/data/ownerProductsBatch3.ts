@@ -7,151 +7,151 @@ const entries: Entry[] = [
   {
     "name": "Stainless Steel Salon Pliers",
     "category": "Extension Tools",
-    "description": "Silver salon pliers shown in the original product photographs. Model specifications to confirm. Compare the tool's jaw profile against the photos to confirm its intended use.",
+    "description": "Stainless-steel salon pliers pictured from two angles. Exact jaw specifications and compatible extension systems have not yet been confirmed.",
     "photos": 2
   },
   {
     "name": "Mundial Professional 777 Cuticle Nipper",
     "category": "Salon Accessories",
-    "description": "Mundial Professional cuticle nipper in its original purple retail packaging. For trained nail-care use; sanitize and handle according to the manufacturer's instructions.",
+    "description": "Mundial Professional 777 cuticle nipper in the original purple packaging. For trained nail-care use with proper cleaning and handling.",
     "photos": 1
   },
   {
     "name": "Wide-Tooth Detangling Comb – Assorted Colors",
     "category": "Salon Accessories",
-    "description": "Wide-tooth styling comb pictured in teal, pink, purple and black. Color options to confirm. Check the available colors before ordering.",
+    "description": "Wide-tooth detangling comb shown in assorted colors. Designed to separate strands; confirm the color available before purchase.",
     "photos": 4
   },
   {
     "name": "Ceramic Round Styling Brush – Size 53",
     "category": "Styling Tools",
-    "description": "Round ceramic and ionic styling brush, with the number 53 printed on its base. Use alongside a blow dryer to create movement or a smooth finish; confirm barrel dimensions.",
+    "description": "Ceramic round brush with the number 53 on its base. Used to guide hair during blow-drying; confirm the barrel diameter if a specific size is needed.",
     "photos": 1
   },
   {
     "name": "Precision Parting Comb – Black",
     "category": "Salon Accessories",
-    "description": "Black fine-tip sectioning comb, shown in single and group views. The pointed tail helps make neat, accurate parts for styling or extension placement.",
+    "description": "Black precision parting comb with a fine-tooth edge and pointed tail. Useful for sectioning hair during styling, braiding and extension preparation.",
     "photos": 2
   },
   {
     "name": "Precision Parting Comb – Pink",
     "category": "Salon Accessories",
-    "description": "Pink precision parting and sectioning comb. Suitable for creating clean partings during hair preparation.",
+    "description": "Pink precision-tail comb for creating neat parts and separating smaller hair sections during styling.",
     "photos": 1
   },
   {
     "name": "Black Hair Extension Pliers",
     "category": "Extension Tools",
-    "description": "Professional black pliers for salon and hair extension work, shown in the supplied photos. Confirm tip compatibility with the extension installation method.",
+    "description": "Black-handled salon pliers pictured for hair-extension work. Check the jaw profile and compatible attachment system before purchasing.",
     "photos": 2
   },
   {
     "name": "Blonde Hair Topper with Base",
     "category": "Hair Toppers & Systems",
-    "description": "Blonde hair topper with a visible attachment base. Dimensions and attachment type to confirm. Confirm attachment type, base measurements and fiber details before purchase.",
+    "description": "Blonde topper hairpiece with a visible base. Confirm fiber type, shade, base size and attachment method before ordering.",
     "photos": 2
   },
   {
     "name": "Brown Hair Topper",
     "category": "Hair Toppers & Systems",
-    "description": "Brown hair topper as shown in the product photograph. Specifications to confirm. Color, base size and attachment method should be checked before ordering.",
+    "description": "Brown hair topper pictured for color comparison. Base dimensions, fiber composition and attachment details are not yet confirmed.",
     "photos": 1
   },
   {
     "name": "Brown & Blonde Hair Extension Bundles",
     "category": "Hair Extensions",
-    "description": "Hair extension pieces in assorted brown and blonde tones. Length and texture to confirm. Compare the pictured shades; exact length, weight and method require confirmation.",
+    "description": "Hair-extension bundles in brown and blonde shades. Confirm the exact tone, length, weight, texture and installation system before ordering.",
     "photos": 3
   },
   {
     "name": "Pre-Bonded Dark Hair Extensions",
     "category": "Hair Extensions",
-    "description": "Dark hair extension strands with pre-attached tips, as pictured. Length and quantity to confirm. Check length, strand count and tip compatibility prior to installation.",
+    "description": "Dark pre-bonded hair-extension strands with visible attachment tips. Confirm strand count, length, hair type and tip compatibility before installation.",
     "photos": 2
   },
   {
     "name": "Hair Styling Sectioning Tools",
     "category": "Salon Accessories",
-    "description": "Set of hair parting and sectioning accessories shown in the product image. Please verify which accessories are included in the set.",
+    "description": "Hair sectioning accessories grouped in the original photograph. Verify the included pieces and quantities before purchase.",
     "photos": 1
   },
   {
     "name": "Silver Extension Pliers",
     "category": "Extension Tools",
-    "description": "Metal pliers for salon work and hair extension application. Model specifications to confirm. Check the jaw shape and intended application technique.",
+    "description": "Silver-colored salon pliers for compatible hair-extension work. Check jaw shape and fitting method before ordering.",
     "photos": 1
   },
   {
     "name": "Red-Handle Hair Extension Pliers",
     "category": "Extension Tools",
-    "description": "Hair extension application pliers with red handles, shown from two angles. Review the photographed tips against your extension method.",
+    "description": "Red-handled pliers pictured for hair-extension installation or maintenance. Confirm the tip style and compatible system.",
     "photos": 2
   },
   {
     "name": "Black Curly Hair Topper",
     "category": "Hair Toppers & Systems",
-    "description": "Curly dark hairpiece photographed from multiple angles. Dimensions to confirm. Confirm the hairpiece base size, curl details and attachment type.",
+    "description": "Dark curly topper with a visible base, photographed from multiple angles. Base size, fiber and attachment type require confirmation.",
     "photos": 3
   },
   {
     "name": "Brown Hair Replacement Topper",
     "category": "Hair Toppers & Systems",
-    "description": "Brown hair topper with an integrated base, shown from multiple angles. Suitable for discussing a custom hairpiece fit; dimensions require confirmation.",
+    "description": "Brown hairpiece or topper with a visible base. Please confirm the available color, dimensions, fiber and fitting method.",
     "photos": 2
   },
   {
     "name": "Black Hair System with Lace Base",
     "category": "Hair Toppers & Systems",
-    "description": "Dark hair replacement piece with lace-style base and several detail photographs. The lace-style base is visible in detailed photographs; measurements are not confirmed.",
+    "description": "Dark hair system featuring a lace-style base, shown in detail. Confirm base dimensions, hair composition and attachment options.",
     "photos": 7
   },
   {
     "name": "Blonde Hair Extension Piece",
     "category": "Hair Extensions",
-    "description": "Blonde hair extension piece shown in the supplied product photograph. Check blonde shade, length and attachment method before choosing this piece.",
+    "description": "Blonde hair-extension piece pictured separately. Confirm shade, length, weight, fiber and attachment technique before buying.",
     "photos": 1
   },
   {
     "name": "Round Styling Brushes – Assorted Sizes",
     "category": "Styling Tools",
-    "description": "Round hair styling brushes shown in multiple barrel sizes. Individual sizes to confirm. Multiple brush barrel sizes are pictured; exact sizes are to be confirmed.",
+    "description": "Round styling brushes shown with multiple barrel sizes. Used for blow-drying and shaping hair; check which sizes are available.",
     "photos": 2
   },
   {
     "name": "Long Straight Dark Hair Extensions",
     "category": "Hair Extensions",
-    "description": "Long straight dark hair extension strands. Length and attachment method to confirm. Length, fiber type and installation system require confirmation.",
+    "description": "Long, straight dark hair-extension strands. Confirm hair type, length, weight, color and installation method.",
     "photos": 2
   },
   {
     "name": "Rechargeable Handheld Mini Fan – Assorted Colors",
     "category": "Salon Accessories",
-    "description": "Compact handheld fan with charging cable, pictured in several color combinations. Supplied with a charging cable in the photos; color and electrical specifications are pending.",
+    "description": "Compact rechargeable handheld mini fan shown with a charging cable. Available colors and electrical specifications are pending confirmation.",
     "photos": 2
   },
   {
     "name": "Professional Salon Hair Scissors",
     "category": "Salon Accessories",
-    "description": "Salon scissors shown in original retail packaging. Please verify blade size and model details from the original packaging.",
+    "description": "Professional hair-cutting scissors shown in their packaging. Confirm blade dimensions and model before ordering.",
     "photos": 1
   },
   {
     "name": "Electric Hair Extension Fusion Tool",
     "category": "Extension Tools",
-    "description": "Electric tool pictured for professional hair extension application. Model details to confirm. For compatible hair-extension methods; operating settings have not been confirmed.",
+    "description": "Electric hair-extension fusion tool pictured for heat-assisted applications. Confirm model, safe operating instructions and compatible technique.",
     "photos": 1
   },
   {
     "name": "Hair Topper for Scalp Coverage",
     "category": "Hair Toppers & Systems",
-    "description": "Hair replacement topper shown on a scalp and as an individual hairpiece. Confirm base dimensions, color and attachment style for the intended coverage area.",
+    "description": "Hair topper photographed separately and in a scalp-coverage example. Confirm base size, fiber type, color and attachment method.",
     "photos": 2
   },
   {
     "name": "Hair Weft Extensions – Application Example",
     "category": "Hair Extensions",
-    "description": "Hair weft extension shown during installation. Full product details to confirm. Image illustrates a weft application; exact available hair specifications are pending.",
+    "description": "Hair weft photographed during installation. Confirm available color, length, weight and compatible installation technique.",
     "photos": 1
   }
 ];

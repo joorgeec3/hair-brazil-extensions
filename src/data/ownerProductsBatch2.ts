@@ -7,119 +7,119 @@ const entries: Entry[] = [
     "category": "Salon Accessories",
     "price": 6.99,
     "photos": 2,
-    "description": "Salon hair clips for holding and sectioning hair while styling. Keep sections separated while coloring, blow-drying or fitting extensions."
+    "description": "Professional salon clips for separating hair during coloring, blow-drying and hair-extension work. Review the photos to confirm the clip style and number of pieces."
   },
   {
     "name": "Supertape Double-Sided Hair Extension Tape Tabs",
     "category": "Wig Tapes & Adhesives",
     "price": 9.99,
     "photos": 1,
-    "description": "Supertape by True Tape, shown in the original packaging. Use according to the packaging instructions on compatible hair-extension surfaces."
+    "description": "Supertape by True Tape, supplied as double-sided adhesive tabs for suitable hair extensions and hairpieces. Apply and remove according to the manufacturer's directions."
   },
   {
     "name": "Professional Hair Coloring Brush",
     "category": "Salon Accessories",
     "price": 4.99,
     "photos": 5,
-    "description": "Black coloring and tint application brush. A useful accessory for applying color or treatment products to selected strands."
+    "description": "Application brush for placing hair color or compatible salon treatments on roots and individual sections with control."
   },
   {
     "name": "Silicone Micro Rings for Hair Extensions",
     "category": "Extension Tools",
     "price": 3.99,
     "photos": 3,
-    "description": "Small clear rings for hair extension application. Confirm ring diameter and the suitable installation method before purchase."
+    "description": "Silicone-lined micro rings for compatible hair-extension techniques. Confirm ring size and color before choosing a fitting tool."
   },
   {
     "name": "Hair Extension Protective Pads",
     "category": "Extension Tools",
     "price": 4.99,
     "photos": 2,
-    "description": "Protective pads for hair extension installation, as pictured. Designed to isolate hair around an application point during compatible extension work."
+    "description": "Protective pads for isolating surrounding strands during compatible extension-application techniques. Check the photos for shape and quantity."
   },
   {
     "name": "U-Shape Snap Clips – 5 Pieces",
     "category": "Salon Accessories",
     "price": 2.99,
     "photos": 5,
-    "description": "Set of five U-shape snap clips for hair styling and extensions. Five clips can help secure sections or suitable extension pieces."
+    "description": "Set of five U-shaped snap clips for holding hair sections or securing compatible extension pieces. Check the size and attachment method."
   },
   {
     "name": "Hair Extension Heat Shield Guards",
     "category": "Extension Tools",
     "price": 3.99,
     "photos": 6,
-    "description": "Protective heat shield guards for hair extension application. Used to help separate adjacent strands during compatible heat-based extension applications."
+    "description": "Heat-shield guards for isolating surrounding hair during compatible heat-assisted hair-extension work. Use with appropriate tools and training."
   },
   {
     "name": "Dreadlock Beads – Silver and Gold",
     "category": "Salon Accessories",
     "price": 6.99,
     "photos": 2,
-    "description": "Decorative dreadlock beads in metallic finishes. Check bead diameter and quantity when planning a braid or dreadlock style."
+    "description": "Silver- and gold-tone decorative beads for dreadlocks, braids and compatible hairstyles. Confirm the bead diameter and quantity before purchasing."
   },
   {
     "name": "Adjustable Wig Grip Band",
     "category": "Wig Caps & Accessories",
     "price": 12.99,
     "photos": 1,
-    "description": "Adjustable black wig grip band as pictured. Adjust the band to fit beneath a compatible wig."
+    "description": "Adjustable black wig-grip band for wearing beneath a compatible wig. Confirm fit and closure details in the original photo."
   },
   {
     "name": "Bio Ionic GoldPro Curling Iron – 1 Inch",
     "category": "Styling Tools",
     "price": 120,
     "photos": 1,
-    "description": "Bio Ionic GoldPro 1-inch curling iron in its original box. Features a one-inch barrel for curls and waves; follow the manufacturer's heat guidance."
+    "description": "Bio Ionic GoldPro curling iron with a one-inch barrel, pictured in the original retail box. For creating curls and waves; follow the manufacturer's heat guidance."
   },
   {
     "name": "Italian Keratin Glue – 50 g",
     "category": "Extension Tools",
     "price": 12.99,
     "photos": 3,
-    "description": "Italian keratin glue for professional hair extensions, 50 grams. Supplied as 50 grams for compatible professional keratin methods."
+    "description": "50 grams of Italian keratin glue for compatible professional keratin-bond hair-extension techniques. Use with the appropriate tools and application method."
   },
   {
     "name": "Elastic Thread for Brazilian Knots",
     "category": "Extension Tools",
     "price": 4.99,
     "photos": 3,
-    "description": "Elastic thread used for Brazilian knot hair extension techniques. Used for tying compatible Brazilian knot extensions; the price is per item."
+    "description": "Elastic thread for Brazilian-knot hair-extension installation, priced individually. Intended to wrap and secure compatible extension attachment points."
   },
   {
     "name": "Keratin Bond Cutting Tool for Hair Extensions",
     "category": "Extension Tools",
     "price": 4.99,
     "photos": 2,
-    "description": "Professional tool for cutting keratin hair-extension bonds. Use carefully during professional maintenance to avoid damaging natural hair."
+    "description": "Tool for separating or trimming compatible keratin bonds during extension maintenance. Handle carefully to protect natural hair."
   },
   {
     "name": "Hair Extension Tool Kit with 100 Micro Rings",
     "category": "Extension Tools",
     "price": 12.99,
     "photos": 3,
-    "description": "Includes pliers, pulling hook, bead tool and 100 silicone-lined 5 mm micro rings. Includes the listed hook, pliers, bead tool and 100 silicone-lined 5 mm rings."
+    "description": "Kit containing extension pliers, a pulling hook, a bead-placement tool and 100 silicone-lined 5 mm micro rings, as listed."
   },
   {
     "name": "Stainless Steel Tape-In Hair Extension Sealing Pliers",
     "category": "Extension Tools",
     "price": 19.99,
     "photos": 1,
-    "description": "Flat-surface stainless steel pliers for sealing tape-in extensions. Flat contact surfaces are designed for pressing compatible tape-in attachments."
+    "description": "Flat-surface stainless-steel pliers used to press compatible tape-in hair-extension attachments. Intended for professional installation or maintenance."
   },
   {
     "name": "Needle and Thread for Hair Extensions",
     "category": "Extension Tools",
     "price": 4.99,
     "photos": 3,
-    "description": "Needle and thread set for hair-extension application. Useful for sewn-weft techniques with a compatible needle and thread."
+    "description": "Needle and thread used for sewn hair-extension wefts and compatible sewing methods. Check needle design and thread color in the product photo."
   },
   {
     "name": "Double-Sided Tape Tabs for Hair Extensions – 60 Pieces",
     "category": "Wig Tapes & Adhesives",
     "price": 6.99,
     "photos": 2,
-    "description": "Replacement blue tape tabs for extensions. 60 pieces; 4 cm × 0.8 cm. Contains 60 blue adhesive tabs measuring 4 cm × 0.8 cm."
+    "description": "Pack of 60 blue replacement double-sided adhesive tabs for compatible tape-in extensions. Each tab is listed at 4 cm × 0.8 cm."
   }
 ];
 
