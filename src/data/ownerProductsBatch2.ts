@@ -112,14 +112,14 @@ const entries: Entry[] = [
     "category": "Extension Tools",
     "price": 4.99,
     "photos": 3,
-    "description": "Needle and thread used for sewn hair-extension wefts and compatible sewing methods. Check needle design and thread color in the product photo."
+    "description": "Hair-extension sewing kit pictured with a spool of black thread and curved metal sewing needles. Intended for compatible sewn-weft and other extension-stitching techniques. Use the appropriate needle and thread for the chosen method."
   },
   {
     "name": "Double-Sided Tape Tabs for Hair Extensions – 60 Pieces",
     "category": "Wig Tapes & Adhesives",
     "price": 6.99,
     "photos": 2,
-    "description": "Pack of 60 blue replacement double-sided adhesive tabs for compatible tape-in extensions. Each tab is listed at 4 cm × 0.8 cm."
+    "description": "Pack of 60 pre-cut blue double-sided adhesive replacement tabs for compatible tape-in hair extensions, supplied on backing sheets. Each tab measures approximately 4 cm × 0.8 cm. Prepare the attachment area and follow the tape manufacturer’s application and removal instructions."
   }
 ];
 
