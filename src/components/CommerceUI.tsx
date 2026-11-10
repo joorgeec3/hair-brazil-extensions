@@ -67,11 +67,11 @@ export const CommerceUI: React.FC<Props> = ({
 
   return (
     <>
-      {/* One fixed action dock prevents duplicate controls and overlapping buttons.
-          On small screens the bag and appointment remain available in the header/menu. */}
+      {/* Compact mobile dock: the bag is already in the header and booking is in the menu.
+          Avoid covering the image, thumbnails and product title with redundant buttons. */}
       <div
         data-floating-actions
-        className="fixed right-4 z-40 flex flex-col items-end gap-2.5 sm:right-6"
+        className="fixed right-3 z-40 flex flex-col items-end gap-2.5 sm:right-5 lg:right-6"
         style={{ bottom: 'calc(env(safe-area-inset-bottom, 0px) + 20px)' }}
       >
         <div className="flex items-center justify-end gap-2">
@@ -91,7 +91,7 @@ export const CommerceUI: React.FC<Props> = ({
             onClick={() => setBagOpen(true)}
             aria-label={copy.bag}
             title={copy.bag}
-            className="relative hidden h-11 w-11 items-center justify-center rounded-full bg-[#d7bb83] text-[#171414] shadow-lg transition-transform duration-300 hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d7bb83] sm:flex"
+            className="relative hidden h-11 w-11 items-center justify-center rounded-full bg-[#d7bb83] text-[#171414] shadow-lg transition-transform duration-300 hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d7bb83] lg:flex"
           >
             <ShoppingBag size={19} />
             {count > 0 && <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#171414] text-[10px] text-[#f4efe6]">{count}</span>}
@@ -101,7 +101,7 @@ export const CommerceUI: React.FC<Props> = ({
           href={getWhatsAppLink(WHATSAPP_MESSAGES.consultation)}
           target="_blank"
           rel="noopener noreferrer"
-          className="hidden min-h-11 min-w-[148px] items-center justify-center gap-2 rounded-full bg-[#171414] px-5 py-3 text-[11px] font-semibold uppercase tracking-[.1em] text-[#f4efe6] shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#5b3935] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d7bb83] sm:inline-flex"
+          className="hidden min-h-11 min-w-[148px] items-center justify-center gap-2 rounded-full bg-[#171414] px-5 py-3 text-[11px] font-semibold uppercase tracking-[.1em] text-[#f4efe6] shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#5b3935] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d7bb83] lg:inline-flex"
         >
           <Calendar size={15} /> Book Now
         </a>
@@ -111,10 +111,10 @@ export const CommerceUI: React.FC<Props> = ({
           rel="noopener noreferrer"
           aria-label="WhatsApp"
           title="WhatsApp"
-          className="inline-flex h-13 w-13 items-center justify-center gap-2 rounded-full bg-[#d7bb83] text-[#171414] shadow-[0_8px_24px_rgba(0,0,0,.20)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#e8d0a2] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#171414] sm:h-12 sm:w-auto sm:min-w-[148px] sm:px-5"
+          className="inline-flex h-11 w-11 items-center justify-center gap-2 rounded-full bg-[#d7bb83] text-[#171414] shadow-[0_8px_24px_rgba(0,0,0,.20)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#e8d0a2] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#171414] lg:h-12 lg:w-auto lg:min-w-[148px] lg:px-5"
         >
           <MessageCircle size={21} strokeWidth={1.8} aria-hidden="true" />
-          <span className="hidden text-[11px] font-semibold tracking-[.03em] sm:inline">WhatsApp</span>
+          <span className="hidden text-[11px] font-semibold tracking-[.03em] lg:inline">WhatsApp</span>
         </a>
       </div>
 

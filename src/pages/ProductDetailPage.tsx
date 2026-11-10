@@ -53,7 +53,7 @@ export const ProductDetailPage: React.FC<Props> = ({
   };
 
   return (
-    <section className="min-h-screen bg-[#fffefa] px-5 pb-24 pt-36 text-[#241f1b] sm:px-10">
+    <section className="min-h-screen bg-[#fffefa] px-4 pb-36 pt-28 text-[#241f1b] sm:px-8 sm:pt-36 lg:pb-24">
       <div className="mx-auto max-w-[1300px]">
         <button
           type="button"
@@ -62,14 +62,14 @@ export const ProductDetailPage: React.FC<Props> = ({
         >
           <ArrowLeft size={15} /> {copy.continue}
         </button>
-        <div className="mt-8 grid gap-10 lg:grid-cols-2 lg:gap-16 xl:gap-24">
+        <div className="mt-5 grid gap-7 sm:mt-8 sm:gap-10 lg:grid-cols-2 lg:gap-16 xl:gap-24">
           <div className="min-w-0">
-            <div className="relative flex aspect-[4/5] items-center justify-center overflow-hidden bg-[#f3f1ed]">
+            <div className="relative flex h-[min(46svh,360px)] min-h-[240px] items-center justify-center overflow-hidden rounded-lg bg-[#f8f6f2] sm:h-[min(60svh,520px)] lg:h-auto lg:aspect-[4/5] lg:rounded-none">
               {mainImage ? (
                 <img
                   src={mainImage}
                   alt={product.name}
-                  className="h-full w-full object-contain"
+                  className="h-full w-full object-contain p-3 sm:p-5 lg:p-8"
                   fetchPriority="high"
                 />
               ) : (
@@ -80,7 +80,7 @@ export const ProductDetailPage: React.FC<Props> = ({
               )}
             </div>
             {images.length > 1 && (
-              <div className="mt-4 grid grid-cols-5 gap-2 sm:grid-cols-6">
+              <div className="mt-3 grid grid-cols-5 gap-2 sm:mt-4 sm:grid-cols-6">
                 {images.map((photo, index) => (
                   <button
                     type="button"
@@ -99,10 +99,10 @@ export const ProductDetailPage: React.FC<Props> = ({
           </div>
           <div className="min-w-0 lg:pt-10">
             <p className="text-[10px] uppercase tracking-[.22em] text-[#9a7c54]">{product.category}</p>
-            <h1 className="mt-4 font-serif-editorial text-[clamp(2.7rem,5vw,5rem)] leading-[1.01]">
+            <h1 className="mt-3 break-words font-serif-editorial text-[clamp(2rem,7.8vw,5rem)] leading-[1.06] sm:mt-4">
               {product.name}
             </h1>
-            <p className={"mt-7 text-[25px] font-medium tracking-tight " + (product.compareAtPrice != null && displayPrice != null && product.compareAtPrice > displayPrice ? "text-[#b64132]" : "")}>
+            <p className={"mt-4 text-[23px] font-medium tracking-tight sm:mt-7 sm:text-[25px] " + (product.compareAtPrice != null && displayPrice != null && product.compareAtPrice > displayPrice ? "text-[#b64132]" : "")}>
               {displayPrice != null ? currency(displayPrice) : copy.request}
               {displayPrice != null && <span className="ml-2 text-xs font-normal text-[#877e75]">USD</span>}
             </p>
