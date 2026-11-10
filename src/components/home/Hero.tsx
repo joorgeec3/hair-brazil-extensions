@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight, GraduationCap, ShoppingBag } from 'lucide-react';
+import { GraduationCap, ShoppingBag } from 'lucide-react';
 
 interface Props { onNavigate: (path: string) => void; }
 
 /**
- * Editorial homepage hero, inspired by the approved Hair Brazil Extensions mockup.
- * The photograph is from the owner's Bella Beauty Brazil repository.
- * All text and calls to action are real, accessible HTML instead of text baked into a banner.
+ * Hair Brazil Extensions hero — owner-approved blonde editorial concept.
+ * Uses the original owner-supplied blonde photograph already hosted locally,
+ * with live text and clickable buttons for a responsive, accessible design.
  */
-const editorialPortrait =
-  'https://raw.githubusercontent.com/joorgeec3/Bella-Beauty-Brazil/bella-final-review-12-onward/public/assets/bella/hero.png';
-const localFallback = '/assets/hair-brazil-hero-blonde-nov-2026.jpg';
-
 export const Hero: React.FC<Props> = ({ onNavigate }) => {
   const [ready, setReady] = useState(false);
-  const [photo, setPhoto] = useState(editorialPortrait);
-
   useEffect(() => {
     const timeout = window.setTimeout(() => setReady(true), 60);
     return () => window.clearTimeout(timeout);
@@ -24,76 +18,95 @@ export const Hero: React.FC<Props> = ({ onNavigate }) => {
 
   return (
     <section
-      className="relative isolate flex min-h-[720px] w-full items-center justify-center overflow-hidden bg-[#432d30] text-[#fff5ec] sm:min-h-[800px] lg:min-h-[min(900px,100svh)]"
       aria-labelledby="hair-brazil-hero-title"
+      className="relative isolate min-h-[760px] overflow-hidden bg-[#b38979] text-[#fff1e2] sm:min-h-[810px] lg:min-h-[min(900px,100svh)]"
     >
+      {/* Full-bleed salon image; content remains actual website elements. */}
+      <div className="absolute inset-0 -z-20 bg-[linear-gradient(120deg,#a97c6b_0%,#936c5f_40%,#b79584_100%)]" />
       <motion.div
-        className="absolute inset-0 -z-20 overflow-hidden"
-        initial={{ scale: 1.035, opacity: 0.5 }}
-        animate={{ scale: ready ? 1 : 1.035, opacity: ready ? 1 : 0.5 }}
-        transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+        initial={{ opacity: 0, scale: 1.045 }}
+        animate={{ opacity: ready ? 1 : 0, scale: ready ? 1 : 1.045 }}
+        transition={{ duration: 1.25, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute inset-y-0 right-0 -z-20 w-full lg:w-[61%]"
       >
         <img
-          src={photo}
-          onError={() => setPhoto((current) => current === localFallback ? current : localFallback)}
-          alt="Editorial portrait with a pink rose, representing the premium beauty experience"
+          src="/assets/hair-brazil-hero-blonde-nov-2026.jpg"
+          alt="Blonde ombré hair with smooth natural-looking lengths at the Hair Brazil Extensions salon"
           fetchPriority="high"
-          className="h-full w-full object-cover object-[43%_center] sm:object-center"
+          className="h-full w-full object-cover object-[54%_35%] sm:object-[50%_35%] lg:object-[50%_45%]"
         />
       </motion.div>
-      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(55,30,31,.45)_0%,rgba(61,30,34,.36)_40%,rgba(61,30,34,.46)_100%)]" />
-      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(0deg,rgba(39,20,25,.78)_0%,rgba(61,37,40,.24)_49%,rgba(47,28,32,.30)_100%)]" />
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-[16%] z-0 overflow-hidden text-center font-serif-editorial text-[24vw] leading-none tracking-[.11em] text-white/[.045] select-none" >
-        HAIR BRAZIL
-      </div>
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(76,43,37,.53),rgba(110,71,57,.49))] lg:bg-[linear-gradient(90deg,rgba(126,82,69,.94)_0%,rgba(132,85,71,.88)_29%,rgba(129,85,71,.54)_47%,rgba(71,45,37,.04)_75%)]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_20%_30%,rgba(244,201,174,.34),transparent_53%)]"
+      />
+      {/* A decorative champagne-colored satin curve echoes the approved composition. */}
+      <svg aria-hidden="true" className="pointer-events-none absolute -bottom-4 -left-7 z-0 hidden h-[29%] w-[67%] opacity-75 lg:block" viewBox="0 0 980 245" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="heroSatinFill" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#ffd9c0" stopOpacity=".55" />
+            <stop offset=".5" stopColor="#eab79c" stopOpacity=".16" />
+            <stop offset="1" stopColor="#c79380" stopOpacity="0" />
+          </linearGradient>
+          <linearGradient id="heroSatinStroke" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stopColor="#ffdfbe" stopOpacity=".9" />
+            <stop offset="1" stopColor="#e9b598" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <path d="M-30 20 C125 50 172 230 412 221 C640 219 693 122 1000 188 L1000 250 L-30 250Z" fill="url(#heroSatinFill)" />
+        <path d="M-30 20 C125 50 172 230 412 221 C640 219 693 122 1000 188" stroke="url(#heroSatinStroke)" strokeWidth="3" fill="none" />
+        <path d="M-30 115 C178 160 190 240 415 234 C660 224 766 163 1000 222" stroke="#ffe5d0" strokeOpacity=".42" strokeWidth="1.5" fill="none" />
+      </svg>
 
       <motion.div
-        initial={{ opacity: 0, y: 22 }}
-        animate={{ opacity: ready ? 1 : 0, y: ready ? 0 : 22 }}
-        transition={{ delay: .15, duration: .85, ease: 'easeOut' }}
-        className="relative z-10 mx-auto flex w-full max-w-[1420px] flex-col items-center px-5 pb-16 pt-36 text-center drop-shadow-[0_2px_24px_rgba(30,10,17,.25)] sm:px-8 sm:pb-20 sm:pt-40 lg:pt-32"
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: ready ? 0 : 20, opacity: ready ? 1 : 0 }}
+        transition={{ duration: .8, delay: .15, ease: 'easeOut' }}
+        className="relative z-10 mx-auto flex min-h-[760px] max-w-[1480px] flex-col justify-center px-5 pb-20 pt-36 text-center sm:min-h-[810px] sm:px-10 lg:min-h-[min(900px,100svh)] lg:w-full lg:items-start lg:px-[min(5.5vw,100px)] lg:pb-24 lg:pt-24 lg:text-left"
       >
-        <p className="mb-6 flex max-w-full items-center justify-center gap-3 text-center text-[9px] font-medium uppercase tracking-[.19em] text-[#ffe2de] sm:gap-5 sm:text-[11px] sm:tracking-[.38em]">
-          <span aria-hidden="true" className="hidden h-px w-10 bg-[#f1c0c0]/75 sm:block" />
-          Premium Hair Extensions &amp; Education
-          <span aria-hidden="true" className="hidden h-px w-10 bg-[#f1c0c0]/75 sm:block" />
+        <p className="mb-8 flex max-w-[760px] items-center justify-center gap-4 text-[11px] font-medium uppercase leading-relaxed tracking-[.26em] text-[#fff0df] drop-shadow-md sm:text-[15px] sm:tracking-[.32em] lg:mb-12 lg:justify-start">
+          <span aria-hidden="true" className="hidden h-px w-16 bg-[#f3c49d] sm:block" />
+          <span>Premium Beauty,<br className="lg:hidden" /> Expert Hair Extensions</span>
+          <span aria-hidden="true" className="hidden h-px w-16 bg-[#f3c49d] sm:block" />
         </p>
 
-        <p className="mb-1 font-['Cormorant_Garamond',Georgia,serif] text-[clamp(1.35rem,3.6vw,3rem)] font-normal uppercase tracking-[.13em] text-[#fff3eb] sm:tracking-[.17em]">
-          Hair Brazil Extensions
-        </p>
-
-        <h1
-          id="hair-brazil-hero-title"
-          className="mx-auto max-w-[1200px] font-['Cormorant_Garamond',Georgia,serif] text-[clamp(4.15rem,9.2vw,10rem)] font-light italic leading-[.88] tracking-[-.065em] text-[#fff7f0] [text-wrap:balance]"
-        >
-          Signature Hair <span className="whitespace-nowrap">Solutions</span>
+        <h1 id="hair-brazil-hero-title" className="max-w-[800px] leading-[.86] text-[#ffebda] drop-shadow-[0_4px_22px_rgba(58,29,26,.24)]">
+          <span className="block whitespace-nowrap font-['Cormorant_Garamond',Georgia,serif] text-[clamp(4rem,9.4vw,9.5rem)] font-light italic tracking-[-.075em]">
+            Hair Brazil
+          </span>
+          <span className="mt-2 block font-sans-ui text-[clamp(1.6rem,4.15vw,4.4rem)] font-light uppercase tracking-[.36em] sm:mt-3 sm:tracking-[.44em]">
+            Extensions
+          </span>
         </h1>
 
-        <p className="mt-7 max-w-[860px] text-[10px] font-medium uppercase leading-relaxed tracking-[.12em] text-[#ffebe4] sm:mt-8 sm:text-[13px] sm:tracking-[.28em]">
-          Extensions <span className="mx-1 text-[#ffc2d3] sm:mx-3">•</span> Hair Replacement <span className="mx-1 text-[#ffc2d3] sm:mx-3">•</span> Professional Courses
-        </p>
+        <div className="mt-10 flex w-full max-w-[590px] items-center justify-center gap-3 sm:mt-11 lg:justify-start">
+          <span aria-hidden="true" className="h-px flex-1 bg-[#e5b896]" />
+          <span className="border border-[#e4b18d] px-6 py-3 text-[13px] uppercase tracking-[.3em] text-[#ffe5d0] sm:px-9 sm:text-[20px] sm:tracking-[.34em]">
+            Blonde Hair
+          </span>
+          <span aria-hidden="true" className="h-px flex-1 bg-[#e5b896]" />
+        </div>
 
-        <div className="mt-8 flex w-full max-w-[310px] flex-col items-stretch justify-center gap-3 sm:mt-9">
+        <div className="mt-10 flex w-full max-w-[625px] flex-col items-stretch justify-center gap-3 sm:mt-12 sm:flex-row sm:gap-5 lg:justify-start">
           <button
             type="button"
             onClick={() => onNavigate('/shop')}
-            className="group inline-flex min-h-[58px] w-full items-center justify-center gap-3 rounded-full bg-[#f3becb] px-7 py-4 text-[12px] font-bold uppercase tracking-[.18em] text-[#452832] shadow-[0_12px_28px_rgba(38,14,22,.25)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#ffe1e7] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+            className="inline-flex min-h-[68px] flex-1 items-center justify-center gap-3 border border-[#f7c3a7] bg-[#f3c6aa] px-7 py-4 text-[13px] font-bold uppercase tracking-[.21em] text-[#39241e] shadow-lg transition duration-300 hover:-translate-y-1 hover:bg-[#ffe0c8] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:text-[16px]"
           >
-            <ShoppingBag size={17} strokeWidth={1.8} /> Shop Now <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
+            <ShoppingBag size={18} strokeWidth={1.6} /> Shop Now
           </button>
           <button
             type="button"
             onClick={() => onNavigate('/courses')}
-            className="group inline-flex min-h-[58px] w-full items-center justify-center gap-3 rounded-full border border-[#f3c0cc]/90 bg-[#2e2026]/45 px-7 py-4 text-[12px] font-semibold uppercase tracking-[.18em] text-[#fff5f0] backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#f3becb] hover:text-[#452832] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+            className="inline-flex min-h-[68px] flex-1 items-center justify-center gap-3 border border-[#f1c4a6] bg-[#765245]/35 px-7 py-4 text-[13px] font-semibold uppercase tracking-[.21em] text-[#ffeadb] backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-[#f3c6aa] hover:text-[#39241e] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:text-[16px]"
           >
-            <GraduationCap size={18} strokeWidth={1.8} /> View Courses
+            <GraduationCap size={19} strokeWidth={1.6} /> Courses
           </button>
         </div>
-
-        <p className="mt-8 text-[10px] font-medium uppercase tracking-[.18em] text-[#fce6df]/90 sm:mt-9 sm:tracking-[.29em]">
-          Pompano Beach, Florida <span aria-hidden="true" className="mx-2">·</span> Private appointments
-        </p>
       </motion.div>
     </section>
   );
