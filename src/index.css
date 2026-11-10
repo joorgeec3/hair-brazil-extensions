@@ -74,3 +74,54 @@ button, a, select, summary, [role="button"], [tabindex]:not([tabindex="-1"]) { c
 .reveal-soft { animation: reveal-soft .8s ease both; }
 @keyframes reveal-soft { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
 @media (prefers-reduced-motion: reduce) { .reveal-soft { animation: none; } }
+
+
+/* Hair Brazil's editorial hero: premium rose/ivory presentation on the homepage only. */
+.hb-editorial-header {
+  padding: 0 !important;
+}
+.hb-editorial-header > div:first-child {
+  max-width: none;
+  border-radius: 0;
+  border: 0;
+  border-bottom: 1px solid rgba(148, 91, 104, .19);
+  background: rgba(255, 249, 246, .97);
+  box-shadow: 0 5px 30px rgba(47, 22, 24, .10);
+  padding: 1.1rem max(1.25rem, calc((100vw - 1280px) / 2));
+}
+.hb-editorial-header .nav-link,
+.hb-editorial-header .icon-link,
+.hb-editorial-header button.text-left,
+.hb-editorial-header select,
+.hb-editorial-header button[aria-label="Toggle menu"] {
+  color: #4a3037;
+}
+.hb-editorial-header .nav-link:hover,
+.hb-editorial-header .nav-link.active,
+.hb-editorial-header .icon-link:hover {
+  color: #9a526a;
+}
+.hb-editorial-header .nav-link::after {
+  background: #ae637a;
+}
+.hb-editorial-header button[aria-label="Toggle menu"] {
+  border-color: rgba(157, 87, 108, .5);
+}
+.hb-editorial-header > div:nth-child(2) {
+  background: rgba(255, 249, 246, .98);
+  border-color: rgba(148, 91, 104, .25);
+}
+.hb-editorial-header > div:nth-child(2) button,
+.hb-editorial-header > div:nth-child(2) a,
+.hb-editorial-header > div:nth-child(2) select {
+  color: #4a3037;
+}
+.hb-editorial-header > div:nth-child(2) a[href*="wa.me"] {
+  background: #98546c;
+  color: white;
+}
+@media (max-width: 639px) {
+  .hb-editorial-header > div:first-child {
+    padding: .85rem 1.25rem;
+  }
+}
