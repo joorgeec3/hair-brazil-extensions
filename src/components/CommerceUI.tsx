@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { ArrowUp, Calendar, Heart, Minus, Plus, ShoppingBag, Trash2, X } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { ArrowUp, Calendar, Heart, MessageCircle, Minus, Plus, ShoppingBag, Trash2, X } from 'lucide-react';
 import { SHOP_COPY, SHOP_PRODUCTS, Language } from '../data/shopData';
 import { getWhatsAppLink, WHATSAPP_MESSAGES } from '../data/siteData';
 
@@ -25,6 +25,28 @@ export const CommerceUI: React.FC<Props> = ({
   bagOpen, setBagOpen, favoritesOpen, setFavoritesOpen
 }) => {
   const copy = SHOP_COPY[language];
+  const [showToTop, setShowToTop] = useState(false);
+  useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        setShowToTop(window.scrollY > 480);
+      });
+    };
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', update);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, []);
+  const scrollToTop = () => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+  };
+  const topLabel = language === 'PT' ? 'Voltar ao topo' : language === 'ES' ? 'Volver arriba' : 'Back to top';
   const details = bag.map((item) => {
     const product = SHOP_PRODUCTS.find((p) => p.id === item.id);
     const unitPrice = product?.options?.find((choice) => choice.label === item.option)?.price ?? product?.price ?? 0;
@@ -45,17 +67,55 @@ export const CommerceUI: React.FC<Props> = ({
 
   return (
     <>
-      <div className="fixed bottom-5 right-5 z-40 flex flex-col items-end gap-2">
-        <button onClick={() => setBagOpen(true)} aria-label={copy.bag} className="relative flex h-12 w-12 items-center justify-center rounded-full bg-[#d7bb83] text-[#171414] shadow-xl transition hover:scale-105">
-          <ShoppingBag size={19}/>
-          {count > 0 && <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#171414] text-[10px] text-[#f4efe6]">{count}</span>}
-        </button>
-        <a href={getWhatsAppLink(WHATSAPP_MESSAGES.consultation)} target="_blank" rel="noreferrer" className="rounded-full bg-[#171414] px-4 py-2.5 text-[10px] uppercase tracking-wider text-[#f4efe6] shadow-xl">
-          <Calendar size={14} className="mr-2 inline"/>Book Now
+      {/* One fixed action dock prevents duplicate controls and overlapping buttons.
+          On small screens the bag and appointment remain available in the header/menu. */}
+      <div
+        data-floating-actions
+        className="fixed right-4 z-40 flex flex-col items-end gap-2.5 sm:right-6"
+        style={{ bottom: 'calc(env(safe-area-inset-bottom, 0px) + 20px)' }}
+      >
+        <div className="flex items-center justify-end gap-2">
+          {showToTop && (
+            <button
+              type="button"
+              onClick={scrollToTop}
+              aria-label={topLabel}
+              title={topLabel}
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-[#d7bb83]/60 bg-[#211b19] text-[#f4e1bc] shadow-lg transition-transform duration-300 hover:-translate-y-1 hover:bg-[#d7bb83] hover:text-[#171414] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d7bb83]"
+            >
+              <ArrowUp size={19} strokeWidth={1.8} />
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={() => setBagOpen(true)}
+            aria-label={copy.bag}
+            title={copy.bag}
+            className="relative hidden h-11 w-11 items-center justify-center rounded-full bg-[#d7bb83] text-[#171414] shadow-lg transition-transform duration-300 hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d7bb83] sm:flex"
+          >
+            <ShoppingBag size={19} />
+            {count > 0 && <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#171414] text-[10px] text-[#f4efe6]">{count}</span>}
+          </button>
+        </div>
+        <a
+          href={getWhatsAppLink(WHATSAPP_MESSAGES.consultation)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hidden min-h-11 min-w-[148px] items-center justify-center gap-2 rounded-full bg-[#171414] px-5 py-3 text-[11px] font-semibold uppercase tracking-[.1em] text-[#f4efe6] shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#5b3935] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d7bb83] sm:inline-flex"
+        >
+          <Calendar size={15} /> Book Now
         </a>
-        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label="Back to top" className="flex h-9 w-9 items-center justify-center rounded-full border border-[#d7bb83]/50 bg-[#171414]/90 text-[#d7bb83]">
-          <ArrowUp size={15}/>
-        </button>
+        <a
+          href={getWhatsAppLink(WHATSAPP_MESSAGES.consultation)}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="WhatsApp"
+          title="WhatsApp"
+          className="inline-flex h-13 w-13 items-center justify-center gap-2 rounded-full bg-[#d7bb83] text-[#171414] shadow-[0_8px_24px_rgba(0,0,0,.20)] transition-all duration-300 hover:-translate-y-1 hover:bg-[#e8d0a2] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#171414] sm:h-12 sm:w-auto sm:min-w-[148px] sm:px-5"
+        >
+          <MessageCircle size={21} strokeWidth={1.8} aria-hidden="true" />
+          <span className="hidden text-[11px] font-semibold tracking-[.03em] sm:inline">WhatsApp</span>
+        </a>
       </div>
 
       {bagOpen && (
@@ -134,9 +194,7 @@ export const CommerceUI: React.FC<Props> = ({
         </div>
       )}
 
-      <button onClick={() => setFavoritesOpen(true)} aria-label={copy.favorites} className="fixed bottom-5 left-5 z-40 flex h-11 w-11 items-center justify-center rounded-full bg-[#f4efe6] text-[#171414] shadow-xl">
-        <Heart size={18} fill={favorites.length ? 'currentColor' : 'none'}/>
-      </button>
+      {/* Favorites remain available in the desktop header and mobile menu. */}
     </>
   );
 };
