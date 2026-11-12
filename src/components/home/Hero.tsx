@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
-import { GraduationCap, ShoppingBag } from 'lucide-react';
+import { CalendarDays, GraduationCap, ShoppingBag } from 'lucide-react';
+import { getWhatsAppLink, WHATSAPP_MESSAGES } from '../../data/siteData';
 
 interface Props { onNavigate: (path: string) => void; }
 
@@ -91,7 +92,7 @@ export const Hero: React.FC<Props> = ({ onNavigate }) => {
           <span aria-hidden="true" className="h-px flex-1 bg-[#e5b896]" />
         </div>
 
-        <div className="mt-10 flex w-full max-w-[625px] flex-col items-stretch justify-center gap-3 sm:mt-12 sm:flex-row sm:gap-5 lg:justify-start">
+        <div className="mt-10 grid w-full max-w-[625px] grid-cols-1 gap-3 sm:mt-12 sm:grid-cols-2 sm:gap-5">
           <button
             type="button"
             onClick={() => onNavigate('/shop')}
@@ -106,6 +107,15 @@ export const Hero: React.FC<Props> = ({ onNavigate }) => {
           >
             <GraduationCap size={19} strokeWidth={1.6} /> Courses
           </button>
+          <a
+            href={getWhatsAppLink(WHATSAPP_MESSAGES.consultation)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-[58px] items-center justify-center gap-3 border border-[#f7c3a7] bg-[#f8d8bd] px-7 py-4 text-[13px] font-bold uppercase tracking-[.17em] text-[#39241e] shadow-lg transition duration-300 hover:-translate-y-1 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:col-start-2 sm:text-[15px]"
+            aria-label="Agendar agora pelo WhatsApp"
+          >
+            <CalendarDays size={19} strokeWidth={1.6} /> Agendar agora
+          </a>
         </div>
       </motion.div>
     </section>
