@@ -1,16 +1,56 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { CalendarDays, GraduationCap, ShoppingBag } from 'lucide-react';
-import { getWhatsAppLink, WHATSAPP_MESSAGES } from '../../data/siteData';
+import { getWhatsAppLink } from '../../data/siteData';
+import type { Language } from '../../data/shopData';
 
-interface Props { onNavigate: (path: string) => void; }
+interface Props { onNavigate: (path: string) => void; language: Language; }
+
+const HERO_COPY: Record<Language, {
+  eyebrow: string;
+  subline: string;
+  highlight: string;
+  shop: string;
+  courses: string;
+  book: string;
+  consultationMessage: string;
+}> = {
+  EN: {
+    eyebrow: 'Premium Beauty,',
+    subline: 'Expert Hair Extensions',
+    highlight: 'Blonde Hair',
+    shop: 'Shop Now',
+    courses: 'Courses',
+    book: 'Book Now',
+    consultationMessage: 'Hi! I would like to schedule an appointment at Hair Brazil Extensions.'
+  },
+  PT: {
+    eyebrow: 'Beleza Premium,',
+    subline: 'Especialistas em Extensões Capilares',
+    highlight: 'Cabelo Loiro',
+    shop: 'Comprar Agora',
+    courses: 'Cursos',
+    book: 'Agendar Agora',
+    consultationMessage: 'Olá! Gostaria de agendar um horário na Hair Brazil Extensions.'
+  },
+  ES: {
+    eyebrow: 'Belleza Premium,',
+    subline: 'Expertos en Extensiones de Cabello',
+    highlight: 'Cabello Rubio',
+    shop: 'Comprar Ahora',
+    courses: 'Cursos',
+    book: 'Reservar Ahora',
+    consultationMessage: '¡Hola! Me gustaría reservar una cita en Hair Brazil Extensions.'
+  }
+};
 
 /**
  * Hair Brazil Extensions hero — owner-approved blonde editorial concept.
  * Uses the original owner-supplied blonde photograph already hosted locally,
  * with live text and clickable buttons for a responsive, accessible design.
  */
-export const Hero: React.FC<Props> = ({ onNavigate }) => {
+export const Hero: React.FC<Props> = ({ onNavigate, language }) => {
+  const copy = HERO_COPY[language];
   const [ready, setReady] = useState(false);
   useEffect(() => {
     const timeout = window.setTimeout(() => setReady(true), 60);
@@ -71,7 +111,7 @@ export const Hero: React.FC<Props> = ({ onNavigate }) => {
       >
         <p className="mb-8 flex max-w-[760px] items-center justify-center gap-4 text-[11px] font-medium uppercase leading-relaxed tracking-[.26em] text-[#fff0df] drop-shadow-md sm:text-[15px] sm:tracking-[.32em] lg:mb-12 lg:justify-start">
           <span aria-hidden="true" className="hidden h-px w-16 bg-[#f3c49d] sm:block" />
-          <span>Premium Beauty,<br className="lg:hidden" /> Expert Hair Extensions</span>
+          <span>{copy.eyebrow}<br className="lg:hidden" /> {copy.subline}</span>
           <span aria-hidden="true" className="hidden h-px w-16 bg-[#f3c49d] sm:block" />
         </p>
 
@@ -87,7 +127,7 @@ export const Hero: React.FC<Props> = ({ onNavigate }) => {
         <div className="mt-10 flex w-full max-w-[590px] items-center justify-center gap-3 sm:mt-11 lg:justify-start">
           <span aria-hidden="true" className="h-px flex-1 bg-[#e5b896]" />
           <span className="border border-[#e4b18d] px-6 py-3 text-[13px] uppercase tracking-[.3em] text-[#ffe5d0] sm:px-9 sm:text-[20px] sm:tracking-[.34em]">
-            Blonde Hair
+            {copy.highlight}
           </span>
           <span aria-hidden="true" className="h-px flex-1 bg-[#e5b896]" />
         </div>
@@ -98,23 +138,23 @@ export const Hero: React.FC<Props> = ({ onNavigate }) => {
             onClick={() => onNavigate('/shop')}
             className="inline-flex min-h-[68px] flex-1 items-center justify-center gap-3 border border-[#f7c3a7] bg-[#f3c6aa] px-7 py-4 text-[13px] font-bold uppercase tracking-[.21em] text-[#39241e] shadow-lg transition duration-300 hover:-translate-y-1 hover:bg-[#ffe0c8] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:text-[16px]"
           >
-            <ShoppingBag size={18} strokeWidth={1.6} /> Shop Now
+            <ShoppingBag size={18} strokeWidth={1.6} /> {copy.shop}
           </button>
           <button
             type="button"
             onClick={() => onNavigate('/courses')}
             className="inline-flex min-h-[68px] flex-1 items-center justify-center gap-3 border border-[#f1c4a6] bg-[#765245]/35 px-7 py-4 text-[13px] font-semibold uppercase tracking-[.21em] text-[#ffeadb] backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:bg-[#f3c6aa] hover:text-[#39241e] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:text-[16px]"
           >
-            <GraduationCap size={19} strokeWidth={1.6} /> Courses
+            <GraduationCap size={19} strokeWidth={1.6} /> {copy.courses}
           </button>
           <a
-            href={getWhatsAppLink(WHATSAPP_MESSAGES.consultation)}
+            href={getWhatsAppLink(copy.consultationMessage)}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex min-h-[58px] items-center justify-center gap-3 border border-[#f7c3a7] bg-[#f8d8bd] px-7 py-4 text-[13px] font-bold uppercase tracking-[.17em] text-[#39241e] shadow-lg transition duration-300 hover:-translate-y-1 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:col-start-2 sm:text-[15px]"
-            aria-label="Agendar agora pelo WhatsApp"
+            aria-label={copy.book + " — WhatsApp"}
           >
-            <CalendarDays size={19} strokeWidth={1.6} /> Agendar agora
+            <CalendarDays size={19} strokeWidth={1.6} /> {copy.book}
           </a>
         </div>
       </motion.div>

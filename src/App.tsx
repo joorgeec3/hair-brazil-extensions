@@ -44,7 +44,7 @@ export default function App() {
   const bagCount = useMemo(() => bag.reduce((sum, item) => sum + item.quantity, 0), [bag]);
   const openBooking = () => window.open('https://wa.me/13053001475?text=Hi%21%20I%20would%20like%20to%20schedule%20an%20appointment%20at%20Hair%20Brazil%20Extensions.', '_blank', 'noopener,noreferrer');
   const renderPage = () => { const normalized = currentPath.replace(/\/+$/, '') || '/';
-    if (normalized === '/') return <HomePage onNavigate={navigate} onOpenBooking={openBooking}/>;
+    if (normalized === '/') return <HomePage onNavigate={navigate} onOpenBooking={openBooking} language={language}/>;
     if (normalized === '/about' || normalized === '/studio') return <AboutPage onOpenBooking={openBooking}/>;
     if (normalized === '/services') return <ServicesPage onNavigate={navigate}/>;
     if (normalized === '/shop') return <ShopPage language={language} favorites={favorites} onToggleFavorite={toggleFavorite} onAdd={addToBag} onNavigate={navigate}/>;
