@@ -15,31 +15,49 @@ import { ProductDetailPage } from './pages/ProductDetailPage';
 import { Language, SHOP_PRODUCTS } from './data/shopData';
 
 type BagItem = { id: string; quantity: number; option?: string };
+const cleanBag = (data: unknown): BagItem[] => {
+  if (!Array.isArray(data)) return [];
+  const merged = new Map<string, BagItem>();
+  for (const raw of data.slice(0, 100)) {
+    if (!raw || typeof raw.id !== 'string') continue;
+    const product = SHOP_PRODUCTS.find((item) => item.id === raw.id && item.price != null);
+    if (!product) continue;
+    const validOption = product.options?.find((item) => item.label === raw.option)?.label ?? product.options?.[0]?.label;
+    const quantity = Math.min(99, Math.max(0, Math.floor(Number(raw.quantity) || 0)));
+    if (!quantity) continue;
+    const key = product.id + ':' + (validOption ?? '');
+    const current = merged.get(key);
+    merged.set(key, { id: product.id, option: validOption, quantity: Math.min(99, (current?.quantity ?? 0) + quantity) });
+  }
+  return [...merged.values()];
+};
 const readStorage = <T,>(key: string, fallback: T): T => { try { const value = localStorage.getItem(key); return value ? JSON.parse(value) as T : fallback; } catch { return fallback; } };
 
 export default function App() {
   const [currentPath, setCurrentPath] = useState(() => window.location.pathname || '/');
   const [language, setLanguage] = useState<Language>(() => (localStorage.getItem('hbe-language') as Language) || 'EN');
-  const [bag, setBag] = useState<BagItem[]>(() => readStorage<BagItem[]>('hbe-bag', []));
+  const [bag, setBag] = useState<BagItem[]>(() => cleanBag(readStorage<unknown>('hbe-bag', [])));
   const [favorites, setFavorites] = useState<string[]>(() => readStorage<string[]>('hbe-favorites', []));
   const [favoritesOpen, setFavoritesOpen] = useState(false);
   const [bagOpen, setBagOpen] = useState(false);
   useEffect(() => { const onPop = () => setCurrentPath(window.location.pathname || '/'); window.addEventListener('popstate', onPop); return () => window.removeEventListener('popstate', onPop); }, []);
-  useEffect(() => { localStorage.setItem('hbe-favorites', JSON.stringify(favorites)); }, [favorites]);
-  useEffect(() => { localStorage.setItem('hbe-language', language); }, [language]);
+  useEffect(() => { try { localStorage.setItem('hbe-favorites', JSON.stringify(favorites)); } catch { /* Storage can be disabled */ } }, [favorites]);
+  useEffect(() => { try { localStorage.setItem('hbe-language', language); } catch { /* Storage can be disabled */ } }, [language]);
   const navigate = (path: string) => { if (path !== currentPath) { window.history.pushState({}, '', path); setCurrentPath(path); window.scrollTo({ top: 0, behavior: 'smooth' }); } };
   const toggleFavorite = (id: string) => setFavorites((items) => items.includes(id) ? items.filter((item) => item !== id) : [...items, id]);
-  const addToBag = (id: string, option?: string) => {
+  const addToBag = (id: string, option?: string, amount = 1) => {
     const product = SHOP_PRODUCTS.find((item) => item.id === id);
     if (!product || product.price == null) return;
-    const selectedOption = product.options?.find((entry) => entry.label === option) ?? product.options?.[0];
-    const chosen = selectedOption?.label;
+    const chosen = product.options?.find((entry) => entry.label === option)?.label ?? product.options?.[0]?.label;
+    const quantity = Math.max(1, Math.min(99, Math.floor(amount) || 1));
     setBag((items) => {
-      const isSame = (item: BagItem) => item.id === id && (item.option || '') === (chosen || '');
-      return items.some(isSame)
-        ? items.map((item) => isSame(item) ? { ...item, quantity: item.quantity + 1 } : item)
-        : [...items, { id, quantity: 1, option: chosen }];
+      const found = items.find((item) => item.id === id && (item.option || '') === (chosen || ''));
+      return found
+        ? items.map((item) => item === found ? { ...item, quantity: Math.min(99, item.quantity + quantity) } : item)
+        : [...items, { id, quantity, option: chosen }];
     });
+    setFavoritesOpen(false);
+    setBagOpen(true);
   };
   const bagCount = useMemo(() => bag.reduce((sum, item) => sum + item.quantity, 0), [bag]);
   const openBooking = () => window.open('https://wa.me/13053001475?text=Hi%21%20I%20would%20like%20to%20schedule%20an%20appointment%20at%20Hair%20Brazil%20Extensions.', '_blank', 'noopener,noreferrer');

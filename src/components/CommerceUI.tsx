@@ -11,7 +11,7 @@ interface Props {
   onSetBag: React.Dispatch<React.SetStateAction<BagItem[]>>;
   onNavigate: (path: string) => void;
   onToggleFavorite: (id: string) => void;
-  onAdd: (id: string, option?: string) => void;
+  onAdd: (id: string, option?: string, quantity?: number) => void;
   bagOpen: boolean;
   setBagOpen: React.Dispatch<React.SetStateAction<boolean>>;
   favoritesOpen: boolean;
@@ -26,6 +26,9 @@ export const CommerceUI: React.FC<Props> = ({
 }) => {
   const copy = SHOP_COPY[language];
   const [showToTop, setShowToTop] = useState(false);
+  const [paymentReady, setPaymentReady] = useState(false);
+  const [checkingOut, setCheckingOut] = useState(false);
+  const [checkoutError, setCheckoutError] = useState('');
   useEffect(() => {
     let frame = 0;
     const update = () => {
@@ -49,19 +52,68 @@ export const CommerceUI: React.FC<Props> = ({
   const topLabel = language === 'PT' ? 'Voltar ao topo' : language === 'ES' ? 'Volver arriba' : 'Back to top';
   const details = bag.map((item) => {
     const product = SHOP_PRODUCTS.find((p) => p.id === item.id);
-    const unitPrice = product?.options?.find((choice) => choice.label === item.option)?.price ?? product?.price ?? 0;
+    const unitPrice = product?.options?.find((choice) => choice.label === item.option)?.price ?? product?.price;
     return { ...item, product, unitPrice };
-  }).filter((item) => item.product);
+  }).filter((item) => item.product && item.unitPrice != null && item.quantity > 0);
   const count = bag.reduce((sum, item) => sum + item.quantity, 0);
-  const total = details.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
+  const total = details.reduce((sum, item) => sum + Number(item.unitPrice) * item.quantity, 0);
 
-  useEffect(() => { localStorage.setItem('hbe-bag', JSON.stringify(bag)); }, [bag]);
+  useEffect(() => {
+    try { localStorage.setItem('hbe-bag', JSON.stringify(bag)); } catch { /* Storage may be blocked */ }
+  }, [bag]);
+  useEffect(() => {
+    if (!bagOpen) return;
+    let cancelled = false;
+    fetch('/api/checkout', { cache: 'no-store' })
+      .then((response) => response.ok ? response.json() : { enabled: false })
+      .then((data) => { if (!cancelled) setPaymentReady(Boolean(data.enabled)); })
+      .catch(() => { if (!cancelled) setPaymentReady(false); });
+    return () => { cancelled = true; };
+  }, [bagOpen]);
+
+  const checkoutText = {
+    EN: { secure: 'Pay securely online', unavailable: 'Card payments are awaiting store setup.', send: 'Send order by WhatsApp', error: 'Could not start payment. Please try again or send the order by WhatsApp.', note: 'Shipping and taxes are confirmed during checkout.', preview: 'Order request — not a paid order' },
+    PT: { secure: 'Pagar com segurança', unavailable: 'O pagamento com cartão aguarda a configuração da loja.', send: 'Enviar pedido pelo WhatsApp', error: 'Não foi possível abrir o pagamento. Tente novamente ou envie o pedido pelo WhatsApp.', note: 'Frete e impostos são confirmados no checkout.', preview: 'Solicitação de pedido — ainda não é uma compra paga' },
+    ES: { secure: 'Pagar de forma segura', unavailable: 'Los pagos con tarjeta están pendientes de configuración.', send: 'Enviar pedido por WhatsApp', error: 'No se pudo iniciar el pago. Inténtalo de nuevo o envía el pedido por WhatsApp.', note: 'El envío y los impuestos se confirman al pagar.', preview: 'Solicitud de pedido — todavía no está pagado' }
+  }[language];
+  const orderMessage = [
+    checkoutText.preview,
+    '',
+    ...details.map(({ product, quantity, option, unitPrice }) =>
+      `${quantity}x ${product?.name}${option ? ' (' + option + ')' : ''} — ${money(Number(unitPrice) * quantity)}`),
+    '',
+    `Subtotal: ${money(total)} USD`,
+    language === 'PT' ? 'Por favor, confirme disponibilidade, frete e como concluir o pagamento.' : language === 'ES'
+      ? 'Por favor, confirma disponibilidad, envío y cómo finalizar el pago.'
+      : 'Please confirm availability, shipping and how to complete payment.'
+  ].join('\n');
+  const requestPayment = async () => {
+    if (checkingOut || !paymentReady || !details.length) return;
+    setCheckingOut(true);
+    setCheckoutError('');
+    try {
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: details.map(({ id, option, quantity }) => ({ id, option, quantity })) })
+      });
+      const data = await response.json();
+      if (!response.ok || !data.url || !/^https:\/\/checkout\.stripe\.com\//.test(data.url)) throw new Error('Checkout unavailable');
+      window.location.assign(data.url);
+    } catch {
+      setCheckoutError(checkoutText.error);
+      setCheckingOut(false);
+    }
+  };
 
   const sameLine = (item: BagItem, id: string, option?: string) =>
     item.id === id && (item.option || '') === (option || '');
   const change = (id: string, option: string | undefined, delta: number) =>
-    onSetBag((items) => items.map((item) => sameLine(item, id, option)
-      ? { ...item, quantity: Math.max(1, item.quantity + delta) } : item));
+    onSetBag((items) => items.flatMap((item) => {
+      if (!sameLine(item, id, option)) return [item];
+      const quantity = Math.min(99, item.quantity + delta);
+      return quantity > 0 ? [{ ...item, quantity }] : [];
+    }));
   const remove = (id: string, option?: string) =>
     onSetBag((items) => items.filter((item) => !sameLine(item, id, option)));
 
@@ -120,10 +172,10 @@ export const CommerceUI: React.FC<Props> = ({
 
       {bagOpen && (
         <div className="fixed inset-0 z-[60] bg-black/40" onClick={() => setBagOpen(false)}>
-          <aside onClick={(event) => event.stopPropagation()} role="dialog" aria-modal="true" aria-label={copy.bag} className="absolute right-0 top-0 h-full w-full max-w-md overflow-y-auto bg-[#f4efe6] p-6 text-[#171414] shadow-2xl sm:p-8">
+          <aside onClick={(event) => event.stopPropagation()} role="dialog" aria-modal="true" aria-label={copy.bag} className="absolute right-0 top-0 flex h-full w-full max-w-md flex-col overflow-y-auto bg-[#f4efe6] p-5 text-[#171414] shadow-2xl sm:p-8">
             <div className="flex items-center justify-between">
               <h2 className="font-serif-editorial text-3xl">{copy.bag}</h2>
-              <button onClick={() => setBagOpen(false)} aria-label="Close"><X/></button>
+              <button type="button" onClick={() => setBagOpen(false)} aria-label="Close" className="rounded-full p-2 transition hover:bg-[#171414]/10"><X/></button>
             </div>
             {details.length === 0 ? (
               <div className="py-24 text-center text-sm text-[#171414]/60">
@@ -152,13 +204,29 @@ export const CommerceUI: React.FC<Props> = ({
                     </div>
                   ))}
                 </div>
-                <div className="mt-8 flex justify-between border-t border-[#171414]/20 pt-5 font-semibold">
-                  <span>Total</span><span>{money(total)}</span>
+                <div className="sticky bottom-0 mt-auto border-t border-[#171414]/20 bg-[#f4efe6] pb-[max(12px,env(safe-area-inset-bottom))] pt-5">
+                  <div className="flex justify-between gap-4 font-semibold">
+                    <span>{language === 'PT' ? 'Subtotal' : language === 'ES' ? 'Subtotal' : 'Subtotal'} ({count})</span>
+                    <span className="tabular-nums">{money(total)}</span>
+                  </div>
+                  <p className="mt-2 text-xs leading-5 text-[#171414]/60">{copy.shipping}</p>
+                  {paymentReady ? (
+                    <button type="button" disabled={checkingOut} onClick={requestPayment} className="mt-4 flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-[#171414] px-5 py-3 text-xs font-semibold uppercase tracking-wider text-[#f4efe6] transition hover:bg-[#927648] disabled:opacity-60">
+                      <ShoppingBag size={17} /> {checkingOut ? '...' : checkoutText.secure}
+                    </button>
+                  ) : (
+                    <p className="mt-4 text-center text-xs leading-5 text-[#886b4a]">{checkoutText.unavailable}</p>
+                  )}
+                  <a
+                    href={getWhatsAppLink(orderMessage)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-[#171414]/30 px-5 py-3 text-center text-xs font-semibold uppercase tracking-wider text-[#171414] transition hover:bg-[#fffefa]"
+                  >
+                    <MessageCircle size={17} /> {checkoutText.send}
+                  </a>
+                  {checkoutError && <p role="alert" className="mt-3 text-xs text-[#a3352c]">{checkoutError}</p>}
                 </div>
-                <p className="mt-3 text-xs leading-5 text-[#171414]/50">{copy.shipping}</p>
-                <button disabled className="mt-5 w-full cursor-not-allowed rounded-full border border-[#171414]/20 py-3.5 text-xs uppercase tracking-wider text-[#171414]/45">
-                  {copy.checkoutSoon}
-                </button>
               </>
             )}
           </aside>

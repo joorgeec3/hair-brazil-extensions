@@ -7,7 +7,7 @@ interface Props {
   language: Language;
   favorites: string[];
   onToggleFavorite: (id: string) => void;
-  onAdd: (id: string, option?: string) => void;
+  onAdd: (id: string, option?: string, quantity?: number) => void;
   onNavigate: (path: string) => void;
 }
 
@@ -45,9 +45,7 @@ export const ProductDetailPage: React.FC<Props> = ({
 
   const handleAdd = () => {
     if (displayPrice == null) return;
-    for (let i = 0; i < quantity; i += 1) {
-      onAdd(product.id, activeOption?.label);
-    }
+    onAdd(product.id, activeOption?.label, quantity);
     setAdded(true);
     window.setTimeout(() => setAdded(false), 1600);
   };

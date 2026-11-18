@@ -6,7 +6,7 @@ interface Props {
   language: Language;
   favorites: string[];
   onToggleFavorite: (id: string) => void;
-  onAdd: (id: string) => void;
+  onAdd: (id: string, option?: string, quantity?: number) => void;
   onNavigate: (path: string) => void;
   favoritesOnly?: boolean;
   coursesOnly?: boolean;
@@ -177,6 +177,7 @@ export const ShopPage: React.FC<Props> = ({
   language,
   favorites,
   onToggleFavorite,
+  onAdd,
   onNavigate,
   favoritesOnly = false,
   coursesOnly = false
@@ -430,6 +431,15 @@ export const ShopPage: React.FC<Props> = ({
                       </div>
                       {product.description && <p className="mt-2 line-clamp-2 text-[11px] leading-[1.55] text-[#736b63]">{product.description}</p>}
                       {!product.available && <p className="mt-2 text-[10px] text-[#948578]">{labels.availability}</p>}
+                      {product.price != null && (
+                        <button
+                          type="button"
+                          onClick={() => onAdd(product.id, product.options?.[0]?.label)}
+                          className="mt-3 inline-flex min-h-10 w-full items-center justify-center gap-2 border border-[#241f1b]/25 bg-[#fffefa] px-2 py-2 text-[10px] font-semibold uppercase tracking-[.08em] transition hover:border-[#241f1b] hover:bg-[#241f1b] hover:text-white sm:text-[11px]"
+                        >
+                          <ShoppingBag size={14} aria-hidden="true" /> {copy.add}
+                        </button>
+                      )}
                     </div>
                   </article>
                 ))}
