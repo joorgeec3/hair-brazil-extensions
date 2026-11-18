@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { ScrollEnhancements } from './components/ScrollEnhancements';
 import { Footer } from './components/Footer';
@@ -61,11 +61,12 @@ export default function App() {
     setBagOpen(true);
   };
   const bagCount = useMemo(() => bag.reduce((sum, item) => sum + item.quantity, 0), [bag]);
+  const clearBagAfterPayment = useCallback(() => setBag([]), []);
   const openBooking = () => window.open('https://wa.me/13053001475?text=Hi%21%20I%20would%20like%20to%20schedule%20an%20appointment%20at%20Hair%20Brazil%20Extensions.', '_blank', 'noopener,noreferrer');
   const renderPage = () => { const normalized = currentPath.replace(/\/+$/, '') || '/';
     if (normalized === '/') return <HomePage onNavigate={navigate} onOpenBooking={openBooking} language={language}/>;
-    if (normalized === '/checkout/success') return <CheckoutResultPage key="success" cancelled={false} language={language} onNavigate={navigate} onPaid={() => setBag([])} />;
-    if (normalized === '/checkout/cancel') return <CheckoutResultPage key="cancel" cancelled={true} language={language} onNavigate={navigate} onPaid={() => setBag([])} />;
+    if (normalized === '/checkout/success') return <CheckoutResultPage key="success" cancelled={false} language={language} onNavigate={navigate} onPaid={clearBagAfterPayment} />;
+    if (normalized === '/checkout/cancel') return <CheckoutResultPage key="cancel" cancelled={true} language={language} onNavigate={navigate} onPaid={clearBagAfterPayment} />;
     if (normalized === '/about' || normalized === '/studio') return <AboutPage onOpenBooking={openBooking}/>;
     if (normalized === '/services') return <ServicesPage onNavigate={navigate}/>;
     if (normalized === '/shop') return <ShopPage language={language} favorites={favorites} onToggleFavorite={toggleFavorite} onAdd={addToBag} onNavigate={navigate}/>;
