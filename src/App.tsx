@@ -12,6 +12,7 @@ import { NotFoundPage } from './pages/NotFoundPage';
 import { ServicesPage } from './pages/ServicesPage';
 import { ShopPage } from './pages/ShopPage';
 import { ProductDetailPage } from './pages/ProductDetailPage';
+import { CheckoutResultPage } from './pages/CheckoutResultPage';
 import { Language, SHOP_PRODUCTS } from './data/shopData';
 
 type BagItem = { id: string; quantity: number; option?: string };
@@ -63,6 +64,8 @@ export default function App() {
   const openBooking = () => window.open('https://wa.me/13053001475?text=Hi%21%20I%20would%20like%20to%20schedule%20an%20appointment%20at%20Hair%20Brazil%20Extensions.', '_blank', 'noopener,noreferrer');
   const renderPage = () => { const normalized = currentPath.replace(/\/+$/, '') || '/';
     if (normalized === '/') return <HomePage onNavigate={navigate} onOpenBooking={openBooking} language={language}/>;
+    if (normalized === '/checkout/success') return <CheckoutResultPage key="success" cancelled={false} language={language} onNavigate={navigate} onPaid={() => setBag([])} />;
+    if (normalized === '/checkout/cancel') return <CheckoutResultPage key="cancel" cancelled={true} language={language} onNavigate={navigate} onPaid={() => setBag([])} />;
     if (normalized === '/about' || normalized === '/studio') return <AboutPage onOpenBooking={openBooking}/>;
     if (normalized === '/services') return <ServicesPage onNavigate={navigate}/>;
     if (normalized === '/shop') return <ShopPage language={language} favorites={favorites} onToggleFavorite={toggleFavorite} onAdd={addToBag} onNavigate={navigate}/>;
