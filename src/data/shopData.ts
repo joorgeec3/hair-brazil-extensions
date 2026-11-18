@@ -1,6 +1,7 @@
 import { OWNER_PRODUCTS } from './ownerProducts';
 import { OWNER_PRODUCTS_BATCH_2 } from './ownerProductsBatch2';
 import { OWNER_PRODUCTS_BATCH_3 } from './ownerProductsBatch3';
+import { CHECKOUT_CATALOG } from './checkoutCatalog.js';
 export type Language = 'EN' | 'PT' | 'ES';
 
 export interface ShopProduct { id: string; name: string; description: string; category: string; price?: number; compareAtPrice?: number; priceFrom?: boolean; currency: 'USD'; image?: string; images?: string[]; options?: { label: string; price: number }[]; available: boolean; variants: string[]; officialUrl?: string; }
@@ -42,7 +43,10 @@ export const SHOP_PRODUCTS: ShopProduct[] = [
   {"id":"hb-54","image":"/assets/catalog-covers/courses/05_brazilian-knots.webp","name":"Brazilian Nots Hair extensions course","description":"Training in Brazilian knot extension techniques, including sectioning and the use of elastic thread with compatible hair pieces. Confirm the complete class program and available sessions.","category":"Training & Courses","price":399,"compareAtPrice":499.99,"priceFrom":false,"currency":"USD","available":false,"variants":[]},
   {"id":"hb-55","image":"/assets/catalog-covers/courses/prosthesis-toupee-replacement-premium.webp","name":"Prosthesis Toupee and Hair Replacement Course","description":"Professional course in hair prosthesis, toupees and hair replacement systems. Explore base options, fit, application and maintenance concepts; ask the studio for the complete course outline.","category":"Training & Courses","price":599,"compareAtPrice":799,"priceFrom":false,"currency":"USD","available":false,"variants":[],"images":["/assets/catalog-covers/courses/prosthesis-toupee-replacement-premium.webp","/assets/catalog-covers/courses/06_prosthesis-toupee-replacement.webp"]},
   {"id":"hb-17","image":"/assets/catalog-covers/08_extensao_escura_folhagem_verde.webp","name":"weft Hair Extension 28\" body wave, Raw Hair, Natural Brown","description":"28-inch natural-brown raw-hair weft extensions in a body-wave style. Check color, bundle weight and the compatible attachment method before purchasing.","category":"Hair Extensions","price":169,"compareAtPrice":198,"priceFrom":false,"currency":"USD","available":false,"variants":[]},
-];
+].map((product) => {
+  const verified = (CHECKOUT_CATALOG as Record<string, { price: number; options?: { label: string; price: number }[] }>)[product.id];
+  return { ...product, price: verified?.price, options: verified?.options ?? product.options };
+});
 
 export const SHOP_COPY = {
   EN: { title: 'Explore Our Hair Collection', subtitle: 'Discover premium hair extensions, wigs and professional hair solutions.', search: 'Search by product name or description', all: 'All categories', filters: 'Filters', sort: 'Sort by', featured: 'Featured', low: 'Lowest Price', high: 'Highest Price', name: 'Name A–Z', clear: 'Clear Filters', results: 'results', empty: 'No products match these filters.', pending: 'Product photos, descriptions, variants and availability still need to be confirmed before products can be added to your bag.', official: 'Catalog information pending', request: 'Price on request', bag: 'Shopping Bag', emptyBag: 'Your bag is empty.', favorites: 'My Favorites', noFavorites: 'No favorites yet.', add: 'Add to Bag', added: 'Added to Bag', details: 'View Details', send: 'Send Order via WhatsApp', checkoutSoon: 'Checkout Coming Soon', continue: 'Continue Shopping', shipping: 'Please confirm shipping, taxes and payment with Hair Brazil Extensions. No payment has been taken.', unavailable: 'Availability to confirm', photoPending: 'Photo pending' },

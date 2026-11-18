@@ -1,4 +1,4 @@
-import { SHOP_PRODUCTS } from '../src/data/shopData';
+import { CHECKOUT_CATALOG } from '../src/data/checkoutCatalog.js';
 
 type Req = {
   method?: string;
@@ -49,7 +49,10 @@ export default async function handler(req: Req, res: Res) {
       consolidated.set(key, { id: raw.id, option: raw.option, quantity });
     }
     const lineItems = [...consolidated.values()].map((entry) => {
-      const product = SHOP_PRODUCTS.find((p) => p.id === entry.id);
+      const product = (CHECKOUT_CATALOG as Record<string, {
+        name: string; category: string; price: number;
+        options?: { label: string; price: number }[];
+      }>)[entry.id];
       if (!product || product.price == null) return null;
       const options = product.options;
       if (options?.length && !options.some((o) => o.label === entry.option)) return null;
